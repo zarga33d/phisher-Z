@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T17:57:33.505155",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "Chrome Mobile",
+    "version": "52.0.3106"
+  },
+  "os": {
+    "family": "Android",
+    "version": "6.0"
+  },
+  "device": {
+    "type": "Mobile",
+    "family": "HTC One M9",
+    "brand": "HTC",
+    "model": "One M9"
+  },
+  "language": null,
+  "headers": {
+    "accept_language": null,
+    "accept_encoding": "gzip",
+    "connection": null,
+    "referer": null
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "Mozilla/5.0 (Linux; Android 6.0; HTC One M9 Build/MRA469775) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.3106.98 Mobile Safari/537.3"
+  }
+}

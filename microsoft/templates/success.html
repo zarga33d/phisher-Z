@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft - Authentication Successful</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-image: url('https://cdn.cgdream.ai/_next/image?url=https%3A%2F%2Fapi.cgdream.ai%2Frails%2Factive_storage%2Fblobs%2Fredirect%2FeyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCS24rREFFPSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ%3D%3D--514df6f9cfb02409e5c1446ea3170f489b806e44%2Fd453cacc-e66b-4dee-acae-999d787a0a6b_0.png&w=1080&q=95');
+            background-size: cover;
+            background-position: center;
+            color: #1b1b1b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+        
+        .success-card {
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 440px;
+            padding: 44px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        
+        .logo {
+            width: 108px;
+            height: auto;
+        }
+        
+        .success-icon {
+            color: #107C10;
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 16px 0;
+            color: #1b1b1b;
+        }
+        
+        p {
+            margin: 16px 0;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .btn {
+            display: inline-block;
+            height: 36px;
+            background-color: #0067b8;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 0 20px;
+            text-decoration: none;
+            line-height: 36px;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background-color: #005da6;
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #616161;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        
+        .footer a {
+            color: #616161;
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #1b1b1b;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-card">
+        <div class="logo-container">
+            <img class="logo" role="img" src="https://aadcdn.msftauth.net/shared/1.0/content/images/microsoft_logo_564db913a7fa0ca42727161c6d031bef.svg" alt="Microsoft">
+        </div>
+        
+        <div class="success-icon">✓</div>
+        
+        <h1>Authentication Successful</h1>
+        
+        <p>You have successfully authenticated your Microsoft account. You will be redirected to your account dashboard shortly.</p>
+        
+        <p>If you are not redirected automatically, please click the button below.</p>
+        
+        <a href="https://account.microsoft.com/" class="btn">Continue to Microsoft Account</a>
+    </div>
+    
+    <div class="footer">
+        <a href="#">Terms of use</a>
+        <a href="#">Privacy & cookies</a>
+        <a href="#">...</a>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add artificial delay for page load effect (2-4 seconds)
+            setTimeout(() => {
+                // Simulate redirect to Microsoft account
+                // In a real scenario, uncomment the line below
+                // window.location.href = "https://account.microsoft.com/";
+            }, 2000 + Math.random() * 2000);
+        });
+    </script>
+</body>
+</html> 

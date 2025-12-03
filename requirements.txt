@@ -1,0 +1,17 @@
+Flask
+Werkzeug
+Jinja2
+itsdangerous
+click
+colorama
+watchdog
+requests
+Pillow
+MarkupSafe
+flask-limiter
+pyfiglet
+tqdm
+rich
+asyncio
+flask-cors
+user-agents 

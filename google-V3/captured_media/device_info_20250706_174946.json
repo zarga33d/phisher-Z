@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T17:49:46.627443",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "Firefox",
+    "version": "128.0"
+  },
+  "os": {
+    "family": "Linux",
+    "version": ""
+  },
+  "device": {
+    "type": "PC",
+    "family": "Other",
+    "brand": null,
+    "model": null
+  },
+  "language": "en-US,en;q=0.5",
+  "headers": {
+    "accept_language": "en-US,en;q=0.5",
+    "accept_encoding": "gzip, deflate, br, zstd",
+    "connection": null,
+    "referer": null
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0"
+  }
+}

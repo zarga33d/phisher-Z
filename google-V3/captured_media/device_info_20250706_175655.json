@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T17:56:55.268785",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "libwww-perl",
+    "version": "6.68"
+  },
+  "os": {
+    "family": "Other",
+    "version": ""
+  },
+  "device": {
+    "type": "Mobile",
+    "family": "Generic Feature Phone",
+    "brand": "Generic",
+    "model": "Feature Phone"
+  },
+  "language": null,
+  "headers": {
+    "accept_language": null,
+    "accept_encoding": "gzip",
+    "connection": null,
+    "referer": null
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "libwww-perl/6.68"
+  }
+}

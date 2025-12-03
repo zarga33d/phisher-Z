@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T17:56:17.949522",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "Chrome",
+    "version": "91.0.4472"
+  },
+  "os": {
+    "family": "Linux",
+    "version": ""
+  },
+  "device": {
+    "type": "PC",
+    "family": "Other",
+    "brand": null,
+    "model": null
+  },
+  "language": null,
+  "headers": {
+    "accept_language": null,
+    "accept_encoding": "gzip",
+    "connection": null,
+    "referer": "http://chatgpt-google-scurity-firewall.tail9b16f8.ts.net"
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+  }
+}

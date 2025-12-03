@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-07-06T17:57:39.222620",
+  "ip_address": "127.0.0.1",
+  "browser": {
+    "family": "Go-http-client",
+    "version": "1.1"
+  },
+  "os": {
+    "family": "Other",
+    "version": ""
+  },
+  "device": {
+    "type": "PC",
+    "family": "Other",
+    "brand": null,
+    "model": null
+  },
+  "language": null,
+  "headers": {
+    "accept_language": null,
+    "accept_encoding": "gzip",
+    "connection": null,
+    "referer": null
+  },
+  "additional_info": {
+    "screen_info": {
+      "resolution": "[Will be captured from JavaScript]",
+      "color_depth": "[Will be captured from JavaScript]"
+    },
+    "user_agent_string": "Go-http-client/1.1"
+  }
+}

